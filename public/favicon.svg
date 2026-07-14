@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Jennifer Ye">
+  <rect width="100" height="100" rx="22" fill="#1d3050" />
+  <text
+    x="50"
+    y="50"
+    dominant-baseline="central"
+    text-anchor="middle"
+    font-family="'Space Grotesk', ui-sans-serif, system-ui, sans-serif"
+    font-size="52"
+    font-weight="600"
+    fill="#d9ad55"
+    letter-spacing="-2"
+  >JY</text>
+</svg>

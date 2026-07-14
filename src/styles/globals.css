@@ -1,0 +1,285 @@
+@import "tailwindcss";
+
+/*
+ * Dark mode is driven by a `.dark` class on <html> (set by next-themes).
+ * This custom variant lets us write `dark:` utilities against that class.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------ *
+ * Design tokens
+ *
+ * Semantic tokens are defined as CSS variables so themes swap values
+ * without components knowing which theme is active. Tailwind's @theme
+ * maps them to utility classes (bg-background, text-foreground, etc.).
+ * ------------------------------------------------------------------ */
+
+:root {
+  /*
+   * Brand palette — deep navy + muted golden yellow.
+   * These are raw brand hues; semantic tokens below decide where they show
+   * up. The interface stays ~90–95% neutral: brand/accent are used with
+   * intent (branding, active nav, links, buttons, small highlights), never
+   * as full-bleed sections.
+   */
+  --color-navy-950: #0b1220;
+  --color-navy-900: #111b2e;
+  --color-navy-800: #16233b;
+  --color-navy-700: #1d3050;
+  --color-navy-600: #274268;
+  --color-navy-500: #345583;
+  --color-navy-400: #5b7bab;
+
+  --color-gold-600: #b6862c;
+  --color-gold-500: #c99a3a;
+  --color-gold-400: #d9ad55;
+  --color-gold-300: #e6c37e;
+
+  /* Plum — reserved for very subtle Music-section accents only. */
+  --color-plum-500: #6c5a86;
+  --color-plum-400: #8a76a6;
+
+  /* Neutral charcoal scale — warm-leaning, never pure black. */
+  --color-charcoal-950: #0d0f14;
+  --color-charcoal-900: #14161c;
+  --color-charcoal-850: #191c23;
+  --color-charcoal-800: #20242c;
+  --color-charcoal-700: #2b303a;
+
+  /* ---- Light theme semantics ---- */
+  --background: #faf9f7; /* warm white */
+  --background-elevated: #ffffff; /* soft off-white cards read against warm bg */
+  --foreground: #14161c; /* near black */
+  --muted: #6b7280; /* slate gray — secondary text */
+  --muted-foreground: #4b5563;
+  --border: #e6e3dd; /* light warm gray */
+  --border-strong: #d6d2ca;
+
+  /* Brand (navy): branding, active nav, links, decorative accents */
+  --brand: var(--color-navy-700);
+  --brand-strong: var(--color-navy-800);
+  --brand-foreground: #ffffff;
+  --link: var(--color-navy-700);
+  --link-hover: var(--color-navy-900);
+
+  /* Accent (gold): buttons/CTAs, hover, badges, highlights — used sparingly */
+  --accent: var(--color-gold-500);
+  --accent-strong: var(--color-gold-600);
+  --accent-foreground: #14161c; /* dark text on gold */
+
+  /* Primary interactive surface defaults to navy (primary buttons, etc.) */
+  --primary: var(--color-navy-700);
+  --primary-hover: var(--color-navy-800);
+  --primary-foreground: #ffffff;
+
+  --ring: var(--color-navy-700);
+
+  /* Section-scoped accents (see .section-* below) */
+  --plum: var(--color-plum-500);
+
+  /* Surfaces layered on top of the background */
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-border: rgba(20, 22, 28, 0.06);
+}
+
+.dark {
+  /* Deep charcoal background, slightly lighter charcoal cards. */
+  --background: var(--color-charcoal-900);
+  --background-elevated: var(--color-charcoal-800);
+  --foreground: #f3f4f6; /* soft white */
+  --muted: #9096a1; /* muted gray */
+  --muted-foreground: #aab0bb;
+  --border: #262b34;
+  --border-strong: #333945;
+
+  /* Navy becomes a supporting color — lifted so it stays visible on charcoal. */
+  --brand: var(--color-navy-400);
+  --brand-strong: var(--color-navy-500);
+  --brand-foreground: #ffffff;
+  --link: #8fb0dd; /* brightened navy for readable links on dark */
+  --link-hover: #b3caea;
+
+  /* Gold stays the accent; warm enough to sit on charcoal. */
+  --accent: var(--color-gold-400);
+  --accent-strong: var(--color-gold-300);
+  --accent-foreground: #14161c;
+
+  /* Primary buttons stay navy but use a lifted, richer navy on dark. */
+  --primary: var(--color-navy-600);
+  --primary-hover: var(--color-navy-500);
+  --primary-foreground: #f3f4f6;
+
+  --ring: var(--color-navy-400);
+
+  --plum: var(--color-plum-400);
+
+  --surface: rgba(20, 22, 28, 0.72);
+  --surface-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Map semantic tokens into Tailwind's theme so utilities are generated. */
+@theme inline {
+  --color-background: var(--background);
+  --color-background-elevated: var(--background-elevated);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  /* Brand (navy) */
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-link: var(--link);
+  --color-link-hover: var(--link-hover);
+
+  /* Accent (gold) */
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /* Primary interactive (navy) */
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+
+  /* Section-scoped accent */
+  --color-plum: var(--plum);
+
+  --color-ring: var(--ring);
+  --color-surface: var(--surface);
+  --color-surface-border: var(--surface-border);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), var(--font-inter), ui-sans-serif,
+    system-ui, sans-serif;
+
+  /* Layout */
+  --breakpoint-3xl: 120rem;
+
+  /* Motion tokens — restrained, product-grade easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ------------------------------------------------------------------ *
+ * Base layer
+ * ------------------------------------------------------------------ */
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    font-variation-settings: "opsz" 32;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Smooth theme transitions on color-bearing properties only */
+    transition:
+      background-color 0.4s var(--ease-in-out-soft),
+      color 0.4s var(--ease-in-out-soft);
+  }
+
+  /* Consistent, visible focus ring for keyboard users */
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: var(--color-brand-foreground);
+  }
+
+  /* Respect user's reduced-motion preference globally */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Utilities
+ * ------------------------------------------------------------------ */
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility text-pretty {
+  text-wrap: pretty;
+}
+
+/*
+ * Premium yellow-underline hover — a thin gold rule that wipes in from the
+ * left on hover/focus. Applied to text links (`.link-underline`). Respects
+ * reduced-motion via the global transition reset above.
+ */
+@utility link-underline {
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1.5px;
+  transition: background-size 0.3s var(--ease-out-expo);
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1.5px;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Section identity
+ *
+ * Sections stay cohesive but earn subtle personality by re-pointing the
+ * accent/decorative tokens within a scope. Wrap a section in one of these
+ * classes; descendants that use `accent`/`plum` tokens inherit the shift.
+ * ------------------------------------------------------------------ */
+
+/* Eats — slightly warmer; gold is allowed to appear a touch more freely. */
+.section-eats {
+  --accent: var(--color-gold-600);
+  --accent-strong: var(--color-gold-500);
+}
+
+.dark .section-eats {
+  --accent: var(--color-gold-300);
+  --accent-strong: var(--color-gold-400);
+}
+
+/*
+ * Music — introduces very subtle plum, only where it complements album art
+ * / Spotify UI. Purple never becomes primary; navy + gold still lead.
+ */
+.section-music {
+  --brand: var(--color-plum-500);
+  --brand-strong: #5a4a72;
+}
+
+.dark .section-music {
+  --brand: var(--color-plum-400);
+  --brand-strong: var(--color-plum-500);
+}
