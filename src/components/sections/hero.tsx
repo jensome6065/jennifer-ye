@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { fadeUp, staggerContainer } from "@/lib/motion";
+import { useParallax } from "@/hooks/use-parallax";
 import { homeContent } from "@/content/home";
 
 const { hero } = homeContent;
@@ -16,11 +17,15 @@ const { hero } = homeContent;
  * behind the headline adds depth without leaning on gradients elsewhere.
  */
 export function Hero() {
+  // Drift the decorative glow slightly against the scroll for quiet depth.
+  const { ref, y } = useParallax<HTMLElement>(40);
+
   return (
-    <section className="relative overflow-hidden">
+    <section ref={ref} className="relative overflow-hidden">
       {/* Subtle brand glow — decorative, low-opacity, never a full bleed. */}
-      <div
+      <motion.div
         aria-hidden
+        style={y ? { y } : undefined}
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[38rem] bg-[radial-gradient(60%_50%_at_50%_0%,color-mix(in_srgb,var(--color-brand)_10%,transparent),transparent)]"
       />
       <Container

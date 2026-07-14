@@ -6,7 +6,8 @@ import { AnimatedItem, AnimatedSection } from "@/components/ui/animated-section"
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { ProjectCover } from "@/components/ui/project-cover";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
+import { ProjectCoverParallax } from "@/components/sections/project-cover-parallax";
 
 /** Status → badge variant, matching the card. Live earns the gold accent. */
 const STATUS_VARIANT: Record<Project["status"], "accent" | "brand" | "neutral"> =
@@ -65,6 +66,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
 
   return (
     <article className="py-16 sm:py-24">
+      <ScrollProgress />
       <Container>
         <Link
           href="/projects"
@@ -117,9 +119,8 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
       {/* Cover */}
       <Container className="mt-12 sm:mt-16">
         <AnimatedSection className="group relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-border bg-background-elevated">
-          <ProjectCover
+          <ProjectCoverParallax
             project={project}
-            priority
             sizes="(min-width: 1152px) 1088px, 100vw"
           />
         </AnimatedSection>
