@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Lifestyle",
   description:
     "Beyond code — the tables I return to and the records on repeat while I build.",
+  alternates: { canonical: "/lifestyle" },
 };
 
 /**

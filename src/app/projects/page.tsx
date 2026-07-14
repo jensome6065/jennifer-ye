@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Projects",
   description:
     "Selected work — AI products, developer tools, and community platforms, presented as case studies.",
+  alternates: { canonical: "/projects" },
 };
 
 /**

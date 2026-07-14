@@ -15,9 +15,36 @@ export const metadata: Metadata = {
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  authors: [{ name: siteConfig.name }],
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
+  publisher: siteConfig.name,
+  keywords: [
+    "Jennifer Ye",
+    "Software Engineer",
+    "Portfolio",
+    "AI products",
+    "Developer tools",
+    "Next.js",
+    "TypeScript",
+    "Full-stack engineer",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
+    locale: "en_US",
     type: "website",
     url: siteConfig.url,
     title: `${siteConfig.name} — ${siteConfig.role}`,
@@ -58,8 +85,16 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <MotionProvider>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-brand focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-brand-foreground focus:shadow-lg"
+            >
+              Skip to content
+            </a>
             <Navbar />
-            <main className="flex-1">{children}</main>
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
             <Footer />
             <BackToTop />
           </MotionProvider>

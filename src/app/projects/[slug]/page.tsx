@@ -29,11 +29,12 @@ export async function generateMetadata({
   return {
     title: project.name,
     description: project.tagline,
+    alternates: { canonical: `/projects/${project.slug}` },
     openGraph: {
       type: "article",
       title: project.name,
       description: project.tagline,
-      ...(project.coverImage && { images: [{ url: project.coverImage.src }] }),
+      url: `/projects/${project.slug}`,
     },
     twitter: {
       card: "summary_large_image",

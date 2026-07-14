@@ -28,11 +28,17 @@ export function Navbar() {
     setOpen(false);
   }, [pathname]);
 
-  // Lock body scroll while the mobile menu is open.
+  // Lock body scroll while the mobile menu is open, and let Escape close it.
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
     return () => {
       document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeyDown);
     };
   }, [open]);
 
@@ -99,6 +105,7 @@ export function Navbar() {
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
+            aria-controls="mobile-menu"
             onClick={() => setOpen((v) => !v)}
             className="flex h-10 w-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-background-elevated md:hidden"
           >
@@ -111,6 +118,7 @@ export function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -118,7 +126,7 @@ export function Navbar() {
             className="fixed inset-x-0 top-16 bottom-0 z-40 bg-background/95 backdrop-blur-xl md:hidden"
           >
             <Container className="flex h-full flex-col py-8">
-              <ul className="flex flex-col gap-1">
+              <ul aria-label="Primary" className="flex flex-col gap-1">
                 {siteConfig.nav.map((item, i) => {
                   const active = isActive(pathname, item.href);
                   return (

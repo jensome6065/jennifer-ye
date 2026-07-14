@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Experience",
   description:
     "A timeline of the roles, teams, and work along the way — engineering, research, and community.",
+  alternates: { canonical: "/experience" },
 };
 
 /**
