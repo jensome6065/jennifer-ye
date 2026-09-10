@@ -7,7 +7,7 @@ import { getExperience } from "@/content/experience";
 export const metadata: Metadata = {
   title: "Experience",
   description:
-    "A timeline of the roles, teams, and work along the way — engineering, research, and community.",
+    "Roles across engineering, research, and community — a trail of places I've dug in.",
   alternates: { canonical: "/experience" },
 };
 
@@ -25,7 +25,7 @@ export default function ExperiencePage() {
         as="h1"
         eyebrow="Experience"
         title="Where I've worked"
-        description="Roles across engineering, research, and community — most recent first. Each shaped how I build."
+        description="Roles across engineering, research, and community — most recent first. Each one another place to dig in."
       />
       <div className="mt-14 sm:mt-16">
         <ExperienceTimeline items={items} />

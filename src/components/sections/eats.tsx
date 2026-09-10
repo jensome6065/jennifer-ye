@@ -1,15 +1,14 @@
-import { AnimatedItem, AnimatedSection } from "@/components/ui/animated-section";
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
-import { SpotCard } from "@/components/ui/spot-card";
+import { EatsFilters } from "@/components/sections/eats-filters";
 import { getSpots } from "@/content/eats";
 
 /**
- * Eats section of the Lifestyle page. A warm, editorial board of spots —
- * restaurants, cafes, and bars — rendered from typed content. Wrapped in
- * `.section-eats` so gold is allowed to appear a touch more freely (ratings,
- * accents) per the section identity system — without changing the palette
- * elsewhere.
+ * Eats section of the Lifestyle page. A menu of spots — restaurants, bakeries,
+ * cafes, and desserts — ranked by personal Beli score instead of price.
+ * Wrapped in `.section-eats` so gold is allowed to appear a touch more freely
+ * per the section identity system. Filtering is client-side so chips stay
+ * snappy without a route change.
  */
 export function Eats() {
   const spots = getSpots();
@@ -19,24 +18,12 @@ export function Eats() {
       <SectionHeader
         as="h2"
         eyebrow="Eats & drinks"
-        title="Places worth returning to"
-        description="A running list of the spots I send friends to — restaurants, cafes, and bars — and what to get when they go."
+        title="The menu"
+        description="Places worth returning to — read it like a restaurant menu. Scores are my Beli rankings (out of 10), not prices. Filter by restaurants, cafes, or sweet treats."
       />
-      <AnimatedSection
-        stagger
-        as="ul"
-        className="mt-14 grid gap-6 sm:mt-16 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3"
-      >
-        {spots.map((spot, i) => (
-          <AnimatedItem as="li" key={spot.id} className="h-full">
-            <SpotCard
-              spot={spot}
-              priority={i < 3}
-              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            />
-          </AnimatedItem>
-        ))}
-      </AnimatedSection>
+      <div className="mt-14 sm:mt-16">
+        <EatsFilters spots={spots} />
+      </div>
     </Container>
   );
 }

@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Github } from "lucide-react";
-import type { Project } from "@/content/projects";
+import {
+  formatProjectGroups,
+  type Project,
+} from "@/content/projects";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/animated-section";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -86,7 +89,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
               {project.status}
             </Badge>
             <p className="text-sm font-medium uppercase tracking-[0.18em] text-muted">
-              {project.category} · {project.year}
+              {formatProjectGroups(project)} · {project.year}
             </p>
           </div>
           <h1 className="mt-5 max-w-3xl text-balance font-display text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
@@ -98,39 +101,38 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
 
           {project.links && project.links.length > 0 && (
             <div className="mt-8 flex flex-wrap gap-3">
-              {project.links.map((link, i) => (
+              {project.links.map((link) => (
                 <Button
                   key={link.href}
                   href={link.href}
-                  variant={i === 0 ? "primary" : "secondary"}
+                  variant="secondary"
+                  size="md"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group"
                 >
-                  {link.label}
                   <LinkIcon href={link.href} />
+                  {link.label}
                 </Button>
               ))}
             </div>
           )}
         </AnimatedSection>
-      </Container>
 
-      {/* Cover */}
-      <Container className="mt-12 sm:mt-16">
-        <AnimatedSection className="group relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-border bg-background-elevated">
-          <ProjectCoverParallax
-            project={project}
-            sizes="(min-width: 1152px) 1088px, 100vw"
-          />
+        {/* Cover */}
+        <AnimatedSection className="mt-12 sm:mt-16">
+          <div className="overflow-hidden rounded-2xl border border-border">
+            <div className="relative aspect-[16/9] w-full">
+              <ProjectCoverParallax
+                project={project}
+                sizes="(min-width: 1280px) 1120px, 100vw"
+              />
+            </div>
+          </div>
         </AnimatedSection>
-      </Container>
 
-      {/* Body */}
-      <Container className="mt-16 sm:mt-20">
-        <div className="grid gap-12 lg:grid-cols-[1fr_18rem] lg:gap-16">
-          <div className="max-w-2xl space-y-10">
-            {/* Overview — leads, no top border. */}
+        {/* Body */}
+        <div className="mt-16 grid gap-14 lg:mt-20 lg:grid-cols-[minmax(0,1fr)_14rem] lg:gap-16">
+          <div className="min-w-0 space-y-10">
             <section>
               <h2 className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-muted">
                 Overview
@@ -142,67 +144,62 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
               </div>
             </section>
 
-            {bodySections.map((s) => (
+            {bodySections.map((section) => (
               <ProseSection
-                key={s.key as string}
-                title={s.title}
-                body={project[s.key] as string[]}
+                key={section.key}
+                title={section.title}
+                body={project[section.key] as string[]}
               />
             ))}
           </div>
 
-          {/* Tech stack — sticky aside on desktop. */}
           <aside className="lg:sticky lg:top-28 lg:self-start">
-            <div className="rounded-2xl border border-border bg-background-elevated p-6">
-              <h2 className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-muted">
-                Built with
-              </h2>
-              <ul className="mt-5 flex flex-wrap gap-2">
-                {project.tech.map((tech) => (
-                  <li key={tech}>
-                    <Badge variant="neutral">{tech}</Badge>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <h2 className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-muted">
+              Stack
+            </h2>
+            <ul className="mt-4 flex flex-wrap gap-2 lg:flex-col lg:items-start">
+              {project.tech.map((tech) => (
+                <li key={tech}>
+                  <Badge variant="outline">{tech}</Badge>
+                </li>
+              ))}
+            </ul>
           </aside>
         </div>
-      </Container>
 
-      {/* Screenshots */}
-      {project.screenshots && project.screenshots.length > 0 && (
-        <Container className="mt-20 sm:mt-24">
-          <h2 className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-muted">
-            Screenshots
-          </h2>
+        {project.screenshots && project.screenshots.length > 0 && (
           <AnimatedSection
             stagger
-            as="ul"
-            className="mt-6 grid gap-6 sm:grid-cols-2"
+            className="mt-16 border-t border-border pt-14 sm:mt-20 sm:pt-16"
           >
-            {project.screenshots.map((shot) => (
-              <AnimatedItem as="li" key={shot.src}>
-                <figure>
-                  <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border bg-background-elevated">
-                    <Image
-                      src={shot.src}
-                      alt={shot.alt}
-                      fill
-                      sizes="(min-width: 640px) 50vw, 100vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  {shot.caption && (
-                    <figcaption className="mt-3 text-sm text-muted">
-                      {shot.caption}
-                    </figcaption>
-                  )}
-                </figure>
-              </AnimatedItem>
-            ))}
+            <h2 className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-muted">
+              Screenshots
+            </h2>
+            <ul className="mt-8 grid gap-6 sm:grid-cols-2">
+              {project.screenshots.map((shot) => (
+                <AnimatedItem as="li" key={shot.src}>
+                  <figure className="overflow-hidden rounded-2xl border border-border bg-background-elevated">
+                    <div className="relative aspect-[16/10]">
+                      <Image
+                        src={shot.src}
+                        alt={shot.alt}
+                        fill
+                        sizes="(min-width: 640px) 50vw, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    {shot.caption && (
+                      <figcaption className="border-t border-border px-4 py-3 text-sm text-muted-foreground">
+                        {shot.caption}
+                      </figcaption>
+                    )}
+                  </figure>
+                </AnimatedItem>
+              ))}
+            </ul>
           </AnimatedSection>
-        </Container>
-      )}
+        )}
+      </Container>
     </article>
   );
 }

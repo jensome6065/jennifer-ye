@@ -58,7 +58,7 @@ The website should demonstrate engineering ability through craftsmanship, not by
 
 Framework
 
-* Next.js 15 (App Router)
+* Next.js 16 (App Router)
 
 Language
 
@@ -326,15 +326,24 @@ Current
 
 Social Links
 
+Brand through-line (everywhere, especially home):
+
+The one thing to take away: Jennifer can't sit still —
+whether that's learning, building, or exploring.
+
 The hero should immediately communicate:
 
 Jennifer Ye
 
-Software Engineer building AI products, developer tools, and communities.
+I can't sit still — whether that's learning, building, or exploring.
 
 Primary CTA
 
 View Projects
+
+The Current section reinforces the triad: Learning / Building / Exploring.
+Lifestyle is the "exploring" surface (eats + music). Projects and
+Experience are the "building." Curiosity and craft are the "learning."
 
 ---
 

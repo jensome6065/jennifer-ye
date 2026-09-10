@@ -7,24 +7,19 @@ interface ProjectGridProps {
 }
 
 /**
- * Responsive project grid with a staggered scroll reveal. Two columns on
- * larger screens so covers stay large and editorial (SNKRS-style), single
- * column on mobile. Cards in the first row are prioritized for loading.
+ * Scannable project list with staggered scroll reveal. Equal row rhythm —
+ * practical to browse as the catalog grows.
  */
 export function ProjectGrid({ projects }: ProjectGridProps) {
   return (
     <AnimatedSection
       stagger
       as="ul"
-      className="grid gap-6 sm:gap-8 lg:grid-cols-2"
+      className="flex flex-col gap-4 sm:gap-5"
     >
       {projects.map((project, i) => (
-        <AnimatedItem as="li" key={project.slug} className="h-full">
-          <ProjectCard
-            project={project}
-            priority={i < 2}
-            sizes="(min-width: 1024px) 50vw, 100vw"
-          />
+        <AnimatedItem as="li" key={project.slug}>
+          <ProjectCard project={project} priority={i < 3} />
         </AnimatedItem>
       ))}
     </AnimatedSection>

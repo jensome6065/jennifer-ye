@@ -31,6 +31,11 @@ export interface Album {
   /** The standout track — the one on repeat. */
   favoriteSong: string;
   /**
+   * Spotify track id for `favoriteSong` — powers the in-page embed player on
+   * the turntable (`spotify:track:<id>` / embed URL).
+   */
+  spotifyTrackId: string;
+  /**
    * Two-tone gradient endpoints (CSS colors) for the generated cover, used
    * until real artwork is added. Kept muted so plum can support without
    * dominating (Music-section identity).
@@ -38,69 +43,155 @@ export interface Album {
   cover: { from: string; to: string };
   /** Optional real artwork. Renders instead of the generated cover. */
   artwork?: AlbumArtwork;
-  /** Optional Spotify (or other) link. */
+  /** Optional Spotify album link. */
   spotifyUrl?: string;
 }
 
+/** Build a Spotify embed URL for a track (compact player). */
+export function spotifyTrackEmbedUrl(
+  trackId: string,
+  options?: { autoplay?: boolean },
+): string {
+  const params = new URLSearchParams({ utm_source: "generator", theme: "0" });
+  if (options?.autoplay) params.set("autoplay", "1");
+  return `https://open.spotify.com/embed/track/${trackId}?${params.toString()}`;
+}
+
+/** Spotify URI for the IFrame API. */
+export function spotifyTrackUri(trackId: string): string {
+  return `spotify:track:${trackId}`;
+}
+
 /**
- * NOTE: Copy below is a first-draft scaffold — revise freely. The structure is
- * stable; only the strings change. Cover gradients are muted and slightly
- * plum-leaning to complement the Music section's subtle identity.
+ * Favorite albums — display order is intentional. Artwork files live in
+ * `/public/images/music/`; cover gradients remain as fallbacks.
  */
 export const albums: Album[] = [
   {
-    id: "blonde",
-    title: "Blonde",
-    artist: "Frank Ocean",
-    year: "2016",
-    favoriteSong: "Self Control",
+    id: "the-secret-of-us",
+    title: "The Secret of Us",
+    artist: "Gracie Abrams",
+    year: "2024",
+    favoriteSong: "Free Now",
+    spotifyTrackId: "6nN8W5zHOii0P61I8eSdR3",
     cover: { from: "#3a3550", to: "#15131f" },
-    spotifyUrl: "https://open.spotify.com/",
+    artwork: {
+      src: "/images/music/the-secret-of-us.jpg",
+      alt: "Album cover for The Secret of Us by Gracie Abrams",
+    },
+    spotifyUrl: "https://open.spotify.com/album/4XXTsu7r9865VvXdvF2iQP",
   },
   {
-    id: "in-rainbows",
-    title: "In Rainbows",
-    artist: "Radiohead",
-    year: "2007",
-    favoriteSong: "Weird Fishes / Arpeggi",
+    id: "beauty-behind-the-madness",
+    title: "Beauty Behind The Madness",
+    artist: "The Weeknd",
+    year: "2015",
+    favoriteSong: "Angel",
+    spotifyTrackId: "5buWSg8MDfzReA0794pchb",
     cover: { from: "#463a54", to: "#181320" },
-    spotifyUrl: "https://open.spotify.com/",
+    artwork: {
+      src: "/images/music/beauty-behind-the-madness.jpg",
+      alt: "Album cover for Beauty Behind The Madness by The Weeknd",
+    },
+    spotifyUrl: "https://open.spotify.com/album/28ZKQMoNBB0etKXZ97G2SN",
   },
   {
-    id: "the-record",
-    title: "the record",
-    artist: "boygenius",
-    year: "2023",
-    favoriteSong: "Not Strong Enough",
+    id: "sos",
+    title: "SOS",
+    artist: "SZA",
+    year: "2022",
+    favoriteSong: "Open Arms (feat. Travis Scott)",
+    spotifyTrackId: "0xaFw2zDYf1rIJWl2dXiSF",
     cover: { from: "#3d3a55", to: "#141422" },
-    spotifyUrl: "https://open.spotify.com/",
+    artwork: {
+      src: "/images/music/sos.jpg",
+      alt: "Album cover for SOS by SZA",
+    },
+    spotifyUrl: "https://open.spotify.com/album/07w0rG5TETcyihsEIZR3qG",
   },
   {
-    id: "punisher",
-    title: "Punisher",
-    artist: "Phoebe Bridgers",
-    year: "2020",
-    favoriteSong: "Kyoto",
+    id: "reputation",
+    title: "reputation",
+    artist: "Taylor Swift",
+    year: "2017",
+    favoriteSong: "Delicate",
+    spotifyTrackId: "6NFyWDv5CjfwuzoCkw47Xf",
     cover: { from: "#33405a", to: "#12151f" },
-    spotifyUrl: "https://open.spotify.com/",
+    artwork: {
+      src: "/images/music/reputation.jpg",
+      alt: "Album cover for reputation by Taylor Swift",
+    },
+    spotifyUrl: "https://open.spotify.com/album/6DEjYFkNZh67HP7R9PSZvv",
   },
   {
-    id: "an-evening",
-    title: "An Evening with Silk Sonic",
-    artist: "Silk Sonic",
-    year: "2021",
-    favoriteSong: "Leave the Door Open",
+    id: "honestly-nevermind",
+    title: "Honestly, Nevermind",
+    artist: "Drake",
+    year: "2022",
+    favoriteSong: "A Keeper",
+    spotifyTrackId: "0nAZGkBGKQCXyaoSJfRhC1",
     cover: { from: "#5a3a4a", to: "#1e131a" },
-    spotifyUrl: "https://open.spotify.com/",
+    artwork: {
+      src: "/images/music/honestly-nevermind.jpg",
+      alt: "Album cover for Honestly, Nevermind by Drake",
+    },
+    spotifyUrl: "https://open.spotify.com/album/3cf4iSSKd8ffTncbtKljXw",
   },
   {
-    id: "a-moon-shaped-pool",
-    title: "A Moon Shaped Pool",
-    artist: "Radiohead",
+    id: "dangerous-woman",
+    title: "Dangerous Woman",
+    artist: "Ariana Grande",
     year: "2016",
-    favoriteSong: "Present Tense",
+    favoriteSong: "Into You",
+    spotifyTrackId: "63y6xWR4gXz7bnUGOk8iI6",
     cover: { from: "#39485a", to: "#13181f" },
-    spotifyUrl: "https://open.spotify.com/",
+    artwork: {
+      src: "/images/music/dangerous-woman.jpg",
+      alt: "Album cover for Dangerous Woman by Ariana Grande",
+    },
+    spotifyUrl: "https://open.spotify.com/album/4lVR2fg3DAUQpGVJ6DciHW",
+  },
+  {
+    id: "hard-to-imagine",
+    title: "Hard To Imagine The Neighbourhood Ever Changing",
+    artist: "The Neighbourhood",
+    year: "2018",
+    favoriteSong: "Void",
+    spotifyTrackId: "747Ki1XZhdywdnrbip0Yak",
+    cover: { from: "#2f3548", to: "#12151c" },
+    artwork: {
+      src: "/images/music/hard-to-imagine.jpg",
+      alt: "Album cover for Hard To Imagine The Neighbourhood Ever Changing by The Neighbourhood",
+    },
+    spotifyUrl: "https://open.spotify.com/album/0ODLCdHBFVvKwJGeSfd1jy",
+  },
+  {
+    id: "what-could-possibly-go-wrong",
+    title: "What Could Possibly Go Wrong",
+    artist: "Dominic Fike",
+    year: "2020",
+    favoriteSong: "Wurli",
+    spotifyTrackId: "5MSshyHGM9ajWSEoBcR0jv",
+    cover: { from: "#3a4558", to: "#141820" },
+    artwork: {
+      src: "/images/music/what-could-possibly-go-wrong.jpg",
+      alt: "Album cover for What Could Possibly Go Wrong by Dominic Fike",
+    },
+    spotifyUrl: "https://open.spotify.com/album/1BubKJqf6Uc4fNae5kLJJ7",
+  },
+  {
+    id: "octane",
+    title: "OCTANE",
+    artist: "Don Toliver",
+    year: "2026",
+    favoriteSong: "Secondhand (feat. Rema)",
+    spotifyTrackId: "0ZLi9vyYoUnQHgJiLcjwyw",
+    cover: { from: "#4a3548", to: "#1a1218" },
+    artwork: {
+      src: "/images/music/octane.jpg",
+      alt: "Album cover for OCTANE by Don Toliver",
+    },
+    spotifyUrl: "https://open.spotify.com/album/131x9G87mD0hP0hGZc9qYN",
   },
 ];
 

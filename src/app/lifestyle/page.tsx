@@ -7,7 +7,7 @@ import { Music } from "@/components/sections/music";
 export const metadata: Metadata = {
   title: "Lifestyle",
   description:
-    "Beyond code — the tables I return to and the records on repeat while I build.",
+    "Exploring — tables worth the trip and the records on repeat while I build.",
   alternates: { canonical: "/lifestyle" },
 };
 
@@ -24,8 +24,8 @@ export default function LifestylePage() {
         <SectionHeader
           as="h1"
           eyebrow="Lifestyle"
-          title="Off the clock"
-          description="A little of what I care about beyond the editor — the food worth the trip and the music that scores the work."
+          title="Still exploring"
+          description="When I'm not building, I'm out in the world — the tables worth the trip and the records that score the work."
         />
         <nav aria-label="Lifestyle sections" className="mt-8 flex gap-3">
           <a

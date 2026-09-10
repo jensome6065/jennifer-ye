@@ -22,11 +22,13 @@ export function Navbar() {
   const pathname = usePathname();
   const scrolled = useScrolled();
   const [open, setOpen] = useState(false);
+  const [menuPath, setMenuPath] = useState(pathname);
 
-  // Close the mobile menu whenever the route changes.
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  // Close the mobile menu when the route changes (adjust state during render).
+  if (menuPath !== pathname) {
+    setMenuPath(pathname);
+    if (open) setOpen(false);
+  }
 
   // Lock body scroll while the mobile menu is open, and let Escape close it.
   useEffect(() => {

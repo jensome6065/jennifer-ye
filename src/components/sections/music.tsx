@@ -1,17 +1,12 @@
-import { AnimatedItem, AnimatedSection } from "@/components/ui/animated-section";
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
-import { AlbumCard } from "@/components/ui/album-card";
+import { RecordShelf } from "@/components/sections/record-shelf";
 import { getAlbums } from "@/content/music";
 
 /**
- * Music section of the Lifestyle page. An Apple Music-inspired grid of album
- * cards rendered from typed content. Wrapped in `.section-music` so the very
- * subtle plum identity applies (the play affordance reads plum here) while
- * navy + gold still lead everywhere else.
- *
- * A subtle top border separates it from Eats above, keeping the two sections
- * distinct within one scroll.
+ * Music section of the Lifestyle page. A listening-room composition: turntable
+ * stage + record shelf. Wrapped in `.section-music` so the subtle plum
+ * identity applies to play/brand accents while navy + gold still lead.
  */
 export function Music() {
   const albums = getAlbums();
@@ -22,24 +17,12 @@ export function Music() {
         <SectionHeader
           as="h2"
           eyebrow="Music"
-          title="On repeat"
-          description="The records I keep coming back to while building — and the one track from each I can't skip."
+          title="On the shelf"
+          description="Pull a record onto the platter — the can't-skip track plays right here. One song from each album I keep coming back to."
         />
-        <AnimatedSection
-          stagger
-          as="ul"
-          className="mt-14 grid grid-cols-2 gap-6 sm:mt-16 sm:grid-cols-3 sm:gap-8 lg:grid-cols-4"
-        >
-          {albums.map((album, i) => (
-            <AnimatedItem as="li" key={album.id} className="h-full">
-              <AlbumCard
-                album={album}
-                priority={i < 4}
-                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-              />
-            </AnimatedItem>
-          ))}
-        </AnimatedSection>
+        <div className="mt-14 sm:mt-16">
+          <RecordShelf albums={albums} />
+        </div>
       </Container>
     </div>
   );

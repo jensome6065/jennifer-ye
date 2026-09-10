@@ -1,28 +1,23 @@
 "use client";
 
-import { motion } from "framer-motion";
-import type { ComponentPropsWithoutRef, ElementType } from "react";
+import { motion, type HTMLMotionProps } from "framer-motion";
+import type { ReactNode } from "react";
 import { fadeUp, inViewport, staggerContainer } from "@/lib/motion";
 
-/**
- * Cache of motion-wrapped tags keyed by element type. `motion(tag)` must not
- * be called during render (it creates a new component identity each time,
- * remounting the subtree), so we memoize per tag at module scope.
- */
-const motionTagCache = new Map<ElementType, ReturnType<typeof motion>>();
+const MOTION_TAGS = {
+  div: motion.div,
+  section: motion.section,
+  article: motion.article,
+  ul: motion.ul,
+  ol: motion.ol,
+  li: motion.li,
+} as const;
 
-function getMotionTag(tag: ElementType): ReturnType<typeof motion> {
-  let cached = motionTagCache.get(tag);
-  if (!cached) {
-    cached = motion(tag);
-    motionTagCache.set(tag, cached);
-  }
-  return cached;
-}
+type MotionTagName = keyof typeof MOTION_TAGS;
 
 type AnimatedSectionProps = {
-  /** Element to render (e.g. "section", "div", "ul"). Defaults to "div". */
-  as?: ElementType;
+  /** Element to render. Defaults to "div". */
+  as?: MotionTagName;
   /**
    * When true, reveals children in a staggered sequence. Direct children
    * should be `<motion.*>` (or nested AnimatedItem) using the `fadeUp`
@@ -31,7 +26,14 @@ type AnimatedSectionProps = {
   stagger?: boolean;
   /** Delay before the reveal begins, in seconds. */
   delay?: number;
-} & ComponentPropsWithoutRef<typeof motion.div>;
+  children?: ReactNode;
+  className?: string;
+  id?: string;
+  transition?: HTMLMotionProps<"div">["transition"];
+} & Omit<
+  HTMLMotionProps<"div">,
+  "as" | "children" | "transition" | "initial" | "whileInView" | "viewport" | "variants"
+>;
 
 /**
  * Scroll-reveal wrapper. Fades its content up the first time it enters the
@@ -52,7 +54,7 @@ export function AnimatedSection({
   transition,
   ...props
 }: AnimatedSectionProps) {
-  const MotionTag = getMotionTag(as);
+  const MotionTag = MOTION_TAGS[as] as typeof motion.div;
 
   return (
     <MotionTag
@@ -70,6 +72,12 @@ export function AnimatedSection({
   );
 }
 
+type AnimatedItemProps = {
+  as?: MotionTagName;
+  children?: ReactNode;
+  className?: string;
+} & Omit<HTMLMotionProps<"div">, "as" | "children" | "variants">;
+
 /**
  * A single staggered item for use inside `<AnimatedSection stagger>`.
  * Shares the `fadeUp` variant so timing is orchestrated by the parent.
@@ -78,8 +86,8 @@ export function AnimatedItem({
   as = "div",
   children,
   ...props
-}: { as?: ElementType } & ComponentPropsWithoutRef<typeof motion.div>) {
-  const MotionTag = getMotionTag(as);
+}: AnimatedItemProps) {
+  const MotionTag = MOTION_TAGS[as] as typeof motion.div;
   return (
     <MotionTag variants={fadeUp} {...props}>
       {children}

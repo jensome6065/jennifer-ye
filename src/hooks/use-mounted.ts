@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+const emptySubscribe = () => () => {};
 
 /**
  * Returns true only after the component has mounted on the client.
@@ -8,11 +10,5 @@ import { useEffect, useState } from "react";
  * theme toggle, whose correct icon isn't known during SSR).
  */
 export function useMounted(): boolean {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  return mounted;
+  return useSyncExternalStore(emptySubscribe, () => true, () => false);
 }

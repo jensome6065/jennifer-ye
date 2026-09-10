@@ -1,4 +1,5 @@
-import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/animated-section";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/container";
@@ -9,15 +10,32 @@ import { cn } from "@/lib/utils";
 
 const { current } = homeContent;
 
+function isExternalHref(href: string) {
+  return /^https?:\/\//.test(href) || href.startsWith("mailto:");
+}
+
 /** Inner content of a Current card, shared between the link and static forms. */
-function CardBody({ item }: { item: CurrentItem }) {
+function CardBody({
+  item,
+  external,
+}: {
+  item: CurrentItem;
+  external?: boolean;
+}) {
+  const Icon = external ? ArrowUpRight : ArrowRight;
+
   return (
     <>
       <div className="flex items-center justify-between gap-3">
         <Badge variant="brand">{item.label}</Badge>
         {item.href && (
-          <ArrowUpRight
-            className="h-4 w-4 text-muted transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brand"
+          <Icon
+            className={cn(
+              "h-4 w-4 text-muted transition-transform duration-200 group-hover:text-brand",
+              external
+                ? "group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                : "group-hover:translate-x-0.5",
+            )}
             aria-hidden
           />
         )}
@@ -35,10 +53,15 @@ function CardBody({ item }: { item: CurrentItem }) {
 const cardClasses =
   "group h-full rounded-2xl border border-border bg-background-elevated p-6 transition-[border-color,box-shadow] duration-300";
 
+const cardInteractiveClasses = cn(
+  cardClasses,
+  "block hover:border-brand/40 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+);
+
 /**
- * "Currently" section — a compact grid of what Jennifer is building,
- * learning, and involved in. Cards with a link get an interactive hover;
- * static cards stay quiet. Reveals with a stagger on scroll.
+ * "Currently" section — learning, building, exploring. Cards with a link get
+ * an interactive hover; static cards stay quiet. Reveals with a stagger
+ * on scroll.
  */
 export function Current() {
   return (
@@ -49,27 +72,34 @@ export function Current() {
         as="ul"
         className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
       >
-        {current.items.map((item) => (
-          <AnimatedItem as="li" key={item.title}>
-            {item.href ? (
-              <a
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(
-                  cardClasses,
-                  "block hover:border-brand/40 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
-                )}
-              >
-                <CardBody item={item} />
-              </a>
-            ) : (
-              <div className={cardClasses}>
-                <CardBody item={item} />
-              </div>
-            )}
-          </AnimatedItem>
-        ))}
+        {current.items.map((item) => {
+          const external = item.href ? isExternalHref(item.href) : false;
+
+          return (
+            <AnimatedItem as="li" key={item.title}>
+              {item.href ? (
+                external ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cardInteractiveClasses}
+                  >
+                    <CardBody item={item} external />
+                  </a>
+                ) : (
+                  <Link href={item.href} className={cardInteractiveClasses}>
+                    <CardBody item={item} />
+                  </Link>
+                )
+              ) : (
+                <div className={cardClasses}>
+                  <CardBody item={item} />
+                </div>
+              )}
+            </AnimatedItem>
+          );
+        })}
       </AnimatedSection>
     </Container>
   );

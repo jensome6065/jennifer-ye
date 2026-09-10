@@ -1,5 +1,9 @@
+import {
+  formatProjectGroups,
+  getAllProjects,
+  getProjectBySlug,
+} from "@/content/projects";
 import { OG_SIZE, OG_CONTENT_TYPE, renderOgImage } from "@/lib/og";
-import { getAllProjects, getProjectBySlug } from "@/content/projects";
 
 /**
  * Per-project Open Graph / Twitter card. One image is pre-rendered per slug
@@ -22,7 +26,7 @@ export default async function ProjectOpengraphImage({ params }: OgProps) {
   const project = getProjectBySlug(slug);
 
   return renderOgImage({
-    eyebrow: project?.category ?? "Project",
+    eyebrow: project ? formatProjectGroups(project) : "Project",
     title: project?.name ?? "Project",
     subtitle: project?.tagline,
   });

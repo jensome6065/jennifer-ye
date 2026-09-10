@@ -8,7 +8,7 @@ export const siteConfig: SiteConfig = {
   name: "Jennifer Ye",
   role: "Software Engineer",
   description:
-    "Software Engineer building AI products, developer tools, and communities.",
+    "I can't sit still — whether that's learning, building, or exploring.",
   url: "https://jensome6065.github.io",
   nav: [
     { label: "Home", href: "/" },

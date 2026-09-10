@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
-import { ProjectGrid } from "@/components/sections/project-grid";
+import { ProjectFilters } from "@/components/sections/project-filters";
 import { getAllProjects } from "@/content/projects";
 
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Selected work — AI products, developer tools, and community platforms, presented as case studies.",
+    "Selected work from someone who can't sit still — AI/ML, web apps, research, games, and systems.",
   alternates: { canonical: "/projects" },
 };
 
 /**
- * Projects index (Milestone 4) — the portfolio's most important page.
- * A Server Component that renders large, SNKRS-style cards from typed content;
- * each links to its own `/projects/[slug]` case study.
+ * Projects index — featured drop → claw → scannable list. Server Component
+ * loads typed content; each row links to its case study.
  */
 export default function ProjectsPage() {
   const projects = getAllProjects();
@@ -25,10 +24,10 @@ export default function ProjectsPage() {
         as="h1"
         eyebrow="Selected work"
         title="Projects"
-        description="A curated set of things I've designed and built — AI products, developer tools, and community platforms. Each opens into a full case study."
+        description="One featured launch, a quick grab if you're feeling lucky, then the full list — filter by AI/ML, web apps, research, games, or systems."
       />
       <div className="mt-14 sm:mt-16">
-        <ProjectGrid projects={projects} />
+        <ProjectFilters projects={projects} />
       </div>
     </Container>
   );
