@@ -129,6 +129,10 @@ export const projects: Project[] = [
       "Zod",
     ],
     cover: { from: "#1d3050", to: "#0b1220" },
+    coverImage: {
+      src: "/images/projects/tek-website.jpg",
+      alt: "TEK community event in a bright atrium — members networking on the stairs",
+    },
     overview: [
       "The public website for TEK (Technology, Empowerment & Kinship) at UMass Amherst — membership, events, and culture for a community that believes technology is better when built together.",
       "Built as a production Next.js 15 app with typed content files so officers can update events, board members, and FAQs without touching layout code.",
@@ -157,6 +161,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["Next.js", "TypeScript", "React", "Tailwind CSS", "Vercel"],
     cover: { from: "#243a5c", to: "#0e1624" },
+    coverImage: {
+      src: "/images/projects/mbf-website.jpg",
+      alt: "Minutemen Blockchain Fund team group photo",
+    },
     overview: [
       "Marketing and recruiting site for the Minutemen Blockchain Fund at UMass Amherst — positioning the fund, surfacing semester events, and giving prospective analysts a clear way in.",
       "A polished Next.js front end deployed on Vercel so the fund’s story reads as confidently as the markets it studies.",
@@ -185,6 +193,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
     cover: { from: "#2a4268", to: "#111b2e" },
+    coverImage: {
+      src: "/images/projects/hackher413-website.jpg",
+      alt: "Hack(H)er413 event website hero with schedule and register CTA",
+    },
     overview: [
       "The public-facing site for Hack(H)er413: schedule, FAQ, sponsorship, team, and everything attendees need before they show up at the ILC.",
       "Contributed as Assistant Head of Technology — keeping the event’s digital presence accurate as organizing details evolve each season.",
@@ -216,6 +228,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["React", "Vite", "JavaScript", "TMDB API", "CSS"],
     cover: { from: "#1f3558", to: "#0c1420" },
+    coverImage: {
+      src: "/images/projects/flixster.jpg",
+      alt: "Flixster movie discovery grid with posters, ratings, and search",
+    },
     overview: [
       "A movie discovery front end powered by The Movie Database API: grid of current titles with posters and ratings, infinite-style load more, and title search with clear/reset.",
       "Built as a unit project with semantic HTML, contrast-aware styling, and responsive layout as first-class requirements.",
@@ -244,6 +260,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["JavaScript", "HTML", "CSS"],
     cover: { from: "#274268", to: "#101a2c" },
+    coverImage: {
+      src: "/images/projects/music-explorer.jpg",
+      alt: "Music Explorer playlist grid with an open tracklist modal",
+    },
     overview: [
       "A playlist browser that renders tiles from local data, opens a modal with tracklists, and lets you like playlists with immediate visual feedback.",
       "Focused on DOM craft: overlays, state on the page, and a layout that still works when the grid is dense.",
@@ -274,6 +294,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["Python", "Selenium", "Pandas", "Data Analysis"],
     cover: { from: "#1a2c48", to: "#0a1018" },
+    coverImage: {
+      src: "/images/projects/tiktok-metadata-parser.png",
+      alt: "Research chart comparing TikTok platform labels vs creator self-disclosure agreement",
+    },
     featured: true,
     overview: [
       "End-to-end tooling for the IDPI TikTok AIGC study: fetch embedded page JSON, merge manual labels, derive disclosure signals, and emit reproducible tables and figures.",
@@ -315,6 +339,10 @@ export const projects: Project[] = [
       "WordCloud",
     ],
     cover: { from: "#2f4a72", to: "#121c30" },
+    coverImage: {
+      src: "/images/projects/fusiontech-ai-dashboard.jpg",
+      alt: "FusionTech Streamlit dashboard with sentiment charts and live review analyser",
+    },
     featured: true,
     overview: [
       "FusionTech AI Review Intelligence: explore product review sentiment across a catalog, surface keywords from negative feedback, and paste a review for on-the-spot sentiment and topic guidance.",
@@ -346,6 +374,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["Python", "Jupyter", "Anomaly Detection", "Machine Learning"],
     cover: { from: "#345583", to: "#16233b" },
+    coverImage: {
+      src: "/images/projects/adaptive-fraud-detector.jpg",
+      alt: "Adaptive fraud detection notebook with anomaly scatter plot and model comparison",
+    },
     overview: [
       "A research notebook project asking whether an anomaly detector that keeps learning a user’s spending behavior can catch unusual transactions better than a one-shot static model.",
       "Collaborative AI4ALL-style study: hypothesis, experimental setup, and evaluation aimed at fewer false positives as habits drift.",
@@ -376,6 +408,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["Python", "yfinance", "Reinforcement Learning", "TD3"],
     cover: { from: "#1d3050", to: "#0b1220" },
+    coverImage: {
+      src: "/images/projects/td3-portfolio-optimization.png",
+      alt: "Cumulative returns chart: TD3 agent vs SPY benchmark",
+    },
     featured: true,
     overview: [
       "A portfolio optimization tool built with the Twin Delayed Deep Deterministic Policy Gradient (TD3) algorithm. On backtest it achieved a Sharpe ratio of 3.67 and a 161.30% total return, outperforming the S&P 500.",
@@ -407,6 +443,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["Python", "SQL", "R", "Streamlit", "Tableau"],
     cover: { from: "#243a5c", to: "#0e1624" },
+    coverImage: {
+      src: "/images/projects/office-leasing-trends.jpg",
+      alt: "Post-COVID U.S. office leasing trends map and regional growth charts",
+    },
     overview: [
       "An analysis of how U.S. commercial office leasing rebounded after COVID, highlighting year-over-year changes in leased square footage by region using Savills data.",
       "Built for the American Statistical Association’s Five College DataFest — and awarded Best Visualization.",
@@ -434,6 +474,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["Next.js", "React", "Tailwind CSS", "Google Places API", "Vercel"],
     cover: { from: "#2a4268", to: "#111b2e" },
+    coverImage: {
+      src: "/images/projects/cafe-providence.jpg",
+      alt: "Cafe Providence discovery UI with map pins and mood-based recommendations",
+    },
     overview: [
       "A web app for finding the best local cafes in Providence, RI, with personalized recommendations tuned to what you want that day.",
       "Shipped at Hack@Brown 2025 — a weekend in a new city, turned into a product.",
@@ -452,39 +496,47 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "crisis360",
-    name: "Crisis360",
+    slug: "map-response",
+    name: "MapResponse",
     tagline:
-      "A real-time situational-awareness platform that turns scattered crisis signals into one clear operating picture.",
+      "Salesforce Futureforce crisis-response platform — multilingual voice agent, chatbot, and real-event ingestion on one map.",
     groups: ["ai-ml", "web"],
-    year: "2024",
+    year: "2026",
     status: "Live",
-    tech: ["Next.js", "TypeScript", "Python", "FastAPI", "PostgreSQL", "OpenAI"],
+    tech: [
+      "Full-Stack",
+      "Agentforce",
+      "Voice AI",
+      "Chatbot",
+      "Event Ingestion",
+      "Maps",
+    ],
     cover: { from: "#1d3050", to: "#0b1220" },
+    coverImage: {
+      src: "/images/projects/map-response.jpg",
+      alt: "MapResponse crisis-response dashboard with live map, voice agent, and event feed",
+    },
     featured: true,
     drop: true,
     overview: [
-      "Crisis360 aggregates live signals — social posts, official alerts, and sensor feeds — into a single, continuously updated map of an unfolding situation, so responders spend their attention on decisions rather than on hunting for information.",
-      "It pairs a streaming ingestion pipeline with LLM-assisted summarization to distill noisy, high-volume inputs into a concise, trustworthy brief that updates as the situation evolves.",
+      "MapResponse is the Futureforce Tech Launchpad (with CodePath) capstone built at Salesforce — a crisis-response platform that puts multilingual voice, chat, and live event signals on one operating map.",
+      "Shipped end-to-end with teammates and mentors so responders get a clear picture instead of hunting across disconnected channels.",
     ],
     problem: [
-      "During a crisis, critical information is fragmented across dozens of channels and arrives faster than any team can read. The cost of a missed or late signal is measured in outcomes, not clicks.",
-      "Existing dashboards show raw feeds but leave the hardest work — synthesis — to already-overloaded operators.",
+      "During a crisis, critical information is fragmented across languages, channels, and feeds. Operators need synthesis and reach — not another raw dashboard.",
     ],
     solution: [
-      "A prioritization layer scores incoming signals for relevance and credibility, and an LLM composes a living situation summary with citations back to the source signals.",
-      "Everything is spatial: signals resolve to locations and cluster on a map, so patterns surface visually before they're obvious in text.",
+      "A map-first response surface with a multilingual voice agent, chatbot, and real-event ingestion so teams can ask, listen, and act from the same picture.",
     ],
     architecture: [
-      "A FastAPI ingestion service normalizes heterogeneous feeds into a common event schema and streams them into PostgreSQL with PostGIS for geospatial queries.",
-      "The Next.js front end subscribes to updates over websockets; summarization runs as a debounced background job so LLM cost scales with signal volume, not with viewers.",
+      "Built as an end-to-end product during Futureforce: voice + chat agents layered over ingested events and a shared geospatial view for coordination.",
     ],
     lessons: [
-      "Trust is a feature: every AI-generated line needed a traceable path back to its sources before operators would rely on it.",
-      "Latency budgets shape architecture more than model choice — the debounced summarization job mattered more to the experience than which model produced the text.",
+      "Shipping an E2E crisis tool under internship constraints forces ruthless prioritization — the map and the agents had to earn their place in the same workflow.",
+      "Multilingual reach isn’t a polish pass; it’s core product when the people you serve don’t all speak one language.",
     ],
     links: [
-      { label: "GitHub", href: "https://github.com/jensome6065" },
+      { label: "Salesforce", href: "https://www.salesforce.com" },
     ],
   },
   {
@@ -497,6 +549,10 @@ export const projects: Project[] = [
     status: "In progress",
     tech: ["TypeScript", "Electron", "Web Speech API", "Node.js", "OpenAI"],
     cover: { from: "#274268", to: "#111b2e" },
+    coverImage: {
+      src: "/images/projects/vaip.jpg",
+      alt: "VAIP voice coding assistant proposing a try/catch edit over an IDE",
+    },
     featured: true,
     overview: [
       "VAIP (Voice AI Programming) is an experiment in editing code without a keyboard — you describe intent aloud and it translates speech into precise, reviewable edits.",
@@ -526,6 +582,10 @@ export const projects: Project[] = [
     status: "Prototype",
     tech: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS", "Mapbox"],
     cover: { from: "#345583", to: "#16233b" },
+    coverImage: {
+      src: "/images/projects/popped-up.png",
+      alt: "Popped Up product mockup — phone UI for discovering local pop-up events",
+    },
     featured: true,
     overview: [
       "Popped Up is a lightweight platform for discovering and organizing local pop-ups — markets, tastings, and one-night events that are notoriously hard to find until they've already happened.",
@@ -555,6 +615,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["Python", "tkinter", "OOP"],
     cover: { from: "#1f3558", to: "#0c1420" },
+    coverImage: {
+      src: "/images/projects/uno-reimagined.jpg",
+      alt: "UNO Reimagined multiplayer game window with custom Swap and Trash cards",
+    },
     overview: [
       "A multiplayer UNO built in Python with custom “Swap” and “Trash” cards that add new decision points to the classic game.",
       "A first-semester CS project designed around OOP principles — and graded on a live demo.",
@@ -580,6 +644,10 @@ export const projects: Project[] = [
     status: "Prototype",
     tech: ["TypeScript", "Figma", "Xcode", "Wit.ai", "Clarifai", "Edamam"],
     cover: { from: "#274268", to: "#101a2c" },
+    coverImage: {
+      src: "/images/projects/nutrigang.jpg",
+      alt: "Nutrigang mobile UI with meal scanner and macro chatbot",
+    },
     overview: [
       "A nutrition app with an AI chatbot, an AI meal scanner for macro tracking, and an intake tracker that turns daily eating into personalized insights.",
       "Built at HackUMass XII after a dining-hall brainstorm about how hard balanced meals still feel in college.",
@@ -607,6 +675,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["C", "Make", "mpg123", "Sockets"],
     cover: { from: "#2f4a72", to: "#121c30" },
+    coverImage: {
+      src: "/images/projects/music-library.jpg",
+      alt: "Terminal music library client with playlist queue and mpg123 playback",
+    },
     overview: [
       "A multiclient music player that uses socket programming and linked lists to manage playlists, queues, and songs over a client-server model with audio playback.",
       "Final systems project for the last CS class in high school — streaming vibes, terminal-native.",
@@ -640,6 +712,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["C", "Make", "Unix"],
     cover: { from: "#1a2c48", to: "#0a1018" },
+    coverImage: {
+      src: "/images/projects/linux-shell.jpg",
+      alt: "Custom Linux shell demo with piping, redirection, and job control",
+    },
     overview: [
       "A shell that supports command execution, I/O redirection, piping, process management, and job control — replicating core bash behavior from scratch.",
       "Built to learn how Unix-based systems actually interpret and execute what you type.",
@@ -670,6 +746,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["JavaScript", "Pug", "Java", "MongoDB", "FinnHub API"],
     cover: { from: "#345583", to: "#16233b" },
+    coverImage: {
+      src: "/images/projects/finso.jpg",
+      alt: "FinSo social financial literacy feed with live market tickers",
+    },
     overview: [
       "A social media app meets financial literacy platform, designed by high schoolers for high schoolers, with real-time stock market data.",
       "Built with a Google mentor and presented to 200 students and 30 Googlers.",
@@ -697,6 +777,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["Processing", "UML", "Game Design"],
     cover: { from: "#2c4466", to: "#101828" },
+    coverImage: {
+      src: "/images/projects/fireboy-watergirl.jpg",
+      alt: "Fireboy and Watergirl Reimagined two-player platformer gameplay",
+    },
     overview: [
       "A two-player platformer with interactive gems, puddle obstacles, score tracking, and game-over logic, modeled after the classic Fireboy and Watergirl.",
       "Final project after finishing APCS early — Processing as a visual playground with its own IDE.",
@@ -727,6 +811,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["HTML", "JavaScript", "Velo"],
     cover: { from: "#1e334f", to: "#0b121c" },
+    coverImage: {
+      src: "/images/projects/clover.jpg",
+      alt: "Clover multilingual financial literacy site with quiz and stock education",
+    },
     overview: [
       "A multilingual financial literacy website for immigrants, featuring interactive quizzes and stock education.",
       "HackNYU’s Best High School Hack — and a first-ever hackathon project.",
@@ -757,6 +845,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["Java", "Gradle", "PID", "Autonomous", "Open Source"],
     cover: { from: "#25406a", to: "#0f1828" },
+    coverImage: {
+      src: "/images/projects/stuylib.jpg",
+      alt: "StuyLib FRC driver-station style UI with vision lock and PID telemetry",
+    },
     overview: [
       "StuyPulse’s open-source FIRST Robotics Challenge library and robot code — Java-driven subsystems for vision, controls, and data logging.",
       "Built inside a 150+ person team culture where autonomous code earned awards every competition season.",
@@ -784,6 +876,10 @@ export const projects: Project[] = [
     status: "Live",
     tech: ["NetLogo", "Turtle Shape Editor", "Game Design"],
     cover: { from: "#314e78", to: "#141e32" },
+    coverImage: {
+      src: "/images/projects/jetpack-joyride.jpg",
+      alt: "Jetpack Joyride Reimagined gameplay set at Stuyvesant High School",
+    },
     overview: [
       "A Stuyvesant High School version of Jetpack Joyride with collectible skins, level progression, coin-based upgrades, and rocket and bolt obstacles.",
       "First high school CS project — NetLogo as the shared starting language for the whole class.",

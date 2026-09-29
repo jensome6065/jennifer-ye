@@ -66,7 +66,11 @@ const cardInteractiveClasses = cn(
 export function Current() {
   return (
     <Container as="section" className="py-24 sm:py-32">
-      <SectionHeader eyebrow={current.eyebrow} title={current.heading} />
+      <SectionHeader
+        eyebrow={current.eyebrow}
+        lineKey="currently"
+        title={current.heading}
+      />
       <AnimatedSection
         stagger
         as="ul"

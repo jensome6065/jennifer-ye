@@ -72,8 +72,8 @@ export interface Spot {
    * at a cafe, a pastry at a bakery.
    */
   favorite: string;
-  /** One or two sentences — an editorial mini-review. */
-  review: string;
+  /** One or two sentences — an editorial mini-review. Optional for cafes & sweets. */
+  review?: string;
   /**
    * Personal Beli ranking (0–10). Rendered on the menu where a price would
    * normally sit. One decimal preferred (e.g. 8.7).
@@ -113,8 +113,6 @@ export function sortByBeli(list: Spot[]): Spot[] {
 /**
  * Favorite spots — restaurants, bakeries, cafes, and desserts. Photos live in
  * `/public/images/eats/`. Add non-NYC places freely; fill `mapsUrl` / `menuUrl`.
- *
- * `beli` values are placeholders — replace with your real Beli rankings.
  */
 export const spots: Spot[] = [
   {
@@ -123,14 +121,14 @@ export const spots: Spot[] = [
     kind: "restaurant",
     category: "Korean-American",
     location: "East Village / Bushwick, NYC",
-    favorite: "Chopped cheese rice cakes",
+    favorite: "The Legendary Cheeseburger",
     review:
-      "Korean-American comfort food with bold flavors — legendary chopped cheese rice cakes and creative cocktails worth the trip.",
-    beli: 9.2,
+      "Double smash burger, kimchi special sauce, American cheese, pickles, onion.",
+    beli: 8.5,
     cover: { from: "#7a3b2e", to: "#2c140f" },
     photo: {
-      src: "/images/eats/nowon.webp",
-      alt: "Loaded burger and Korean-American small plates at Nowon",
+      src: "/images/eats/nowon.jpg",
+      alt: "The Legendary Cheeseburger at Nowon — double smash, kimchi sauce, sesame bun",
     },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Nowon%20East%20Village%20/%20Bushwick%2C%20NYC",
@@ -141,14 +139,14 @@ export const spots: Spot[] = [
     kind: "restaurant",
     category: "Korean-Cajun",
     location: "Murray Hill, NYC",
-    favorite: "Jambalaya fried rice",
+    favorite: "Soy-Marinated Eggs & Cracklin'",
     review:
-      "A mashup of Korean and Cajun influences with standout jambalaya fried rice and rotating market-driven specials.",
-    beli: 8.7,
+      "Soft-boiled soy-marinated eggs with wasabi aioli and cracklin'.",
+    beli: 8.1,
     cover: { from: "#8a5a1c", to: "#301f08" },
     photo: {
-      src: "/images/eats/kjun.webp",
-      alt: "Louisiana-inspired Korean dishes at KJUN in a cozy dining room",
+      src: "/images/eats/kjun.jpg",
+      alt: "Soy-marinated egg halves with wasabi aioli and cracklin' at KJUN",
     },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=KJUN%20Murray%20Hill%2C%20NYC",
@@ -159,14 +157,14 @@ export const spots: Spot[] = [
     kind: "restaurant",
     category: "Vietnamese",
     location: "Union Square, NYC",
-    favorite: "Noodle soups & grilled meats",
+    favorite: "Wagyu Pho",
     review:
-      "Deeply flavored noodle soups, grilled meats, and central Vietnam regional specialties — authentic, not tourist-menu Vietnamese.",
-    beli: 8.8,
+      "Miyazaki A5 Wagyu, American Wagyu, chef's signature pho broth & aromatics.",
+    beli: 8.4,
     cover: { from: "#7d4a24", to: "#2c190c" },
     photo: {
-      src: "/images/eats/ladong.jpeg",
-      alt: "Vietnamese rice noodle dishes and grilled meats at La Dong",
+      src: "/images/eats/ladong.jpg",
+      alt: "Wagyu pho at La Dong — broth poured tableside over raw beef and aromatics",
     },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=La%20Dong%20Union%20Square%2C%20NYC",
@@ -177,14 +175,13 @@ export const spots: Spot[] = [
     kind: "restaurant",
     category: "Sushi",
     location: "Midtown, NYC",
-    favorite: "Omakase-style sets",
-    review:
-      "Small and highly rated near Penn Station — quality fish, omakase-style sets, and quick service that still feels careful.",
-    beli: 8.9,
+    favorite: "Lunch sushi selection",
+    review: "6pc nigiri and one spicy tuna roll.",
+    beli: 8.3,
     cover: { from: "#6f4a2b", to: "#2a1c10" },
     photo: {
-      src: "/images/eats/sushi-35-west.avif",
-      alt: "Assorted premium nigiri and maki set at Sushi 35 West",
+      src: "/images/eats/sushi-35-west.jpg",
+      alt: "Lunch sushi selection at Sushi 35 West — nigiri and spicy tuna rolls",
     },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Sushi%2035%20West%20Midtown%2C%20NYC",
@@ -195,14 +192,14 @@ export const spots: Spot[] = [
     kind: "restaurant",
     category: "Vietnamese",
     location: "East Village, NYC",
-    favorite: "Banh xeo & shareable plates",
+    favorite: "O.G. Bánh Mì",
     review:
-      "Contemporary Vietnamese from the Di An Di team — shareable plates and bold herb-forward flavors.",
-    beli: 8.6,
+      "BÁNH ORIGINAL — combination Vietnamese cold cuts on house baked bread.",
+    beli: 8.9,
     cover: { from: "#7a4a2e", to: "#2c140f" },
     photo: {
-      src: "/images/eats/banh-anh-em.avif",
-      alt: "Vietnamese banh xeo crepe and shared plates at Banh Anh Em",
+      src: "/images/eats/banh-anh-em.jpg",
+      alt: "O.G. bánh mì at Banh Anh Em with pork floss, cold cuts, and herbs",
     },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Banh%20Anh%20Em%20East%20Village%2C%20NYC",
@@ -213,14 +210,14 @@ export const spots: Spot[] = [
     kind: "restaurant",
     category: "Modern Korean",
     location: "Lower East Side, NYC",
-    favorite: "Handmade noodles & small plates",
+    favorite: "8282 Steak",
     review:
-      "Inventive Korean small plates, handmade noodles, and a thoughtful natural wine list on the Lower East Side.",
-    beli: 9.0,
+      "Grilled hanger steak, mashed sweet potatoes, pine nut basil pesto.",
+    beli: 8.4,
     cover: { from: "#6a3b2e", to: "#24140f" },
     photo: {
-      src: "/images/eats/eight-two-eight-two.webp",
-      alt: "Contemporary Korean small plates and noodles at 8282",
+      src: "/images/eats/eight-two-eight-two.jpg",
+      alt: "8282 steak with mashed sweet potatoes and pine nut basil pesto",
     },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=8282%20Lower%20East%20Side%2C%20NYC",
@@ -231,11 +228,15 @@ export const spots: Spot[] = [
     kind: "restaurant",
     category: "Cambodian",
     location: "Embarcadero, San Francisco, CA",
-    favorite: "Noodles & shaking beef",
+    favorite: "K.T.P.P. / Pork Noodle Soup",
     review:
-      "Nite Yun's Ferry Building Cambodian counter — wok-kissed noodles, peppery broths, and one-plate lunches with real presence.",
-    beli: 8.8,
+      "Rice noodles, shrimp, pork three ways, crispy garlic, cilantro, and scallions in an 8-hour pork broth.",
+    beli: 7.9,
     cover: { from: "#7a3b2e", to: "#2c140f" },
+    photo: {
+      src: "/images/eats/lunette.jpg",
+      alt: "K.T.P.P. pork noodle soup at Lunette with shrimp, herbs, and crispy garlic",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Lunette%20Ferry%20Building%20San%20Francisco%2C%20CA",
   },
@@ -245,11 +246,15 @@ export const spots: Spot[] = [
     kind: "restaurant",
     category: "Beijing roast duck",
     location: "Beijing, China",
-    favorite: "Peking duck",
+    favorite: "Quanjude Signature Beijing Duck",
     review:
-      "The classic — carved tableside Peking duck with thin pancakes, scallion, and sweet bean sauce. Worth the pilgrimage.",
-    beli: 9.1,
+      "Steamed crepe, scallion, cucumber, sweet soybean paste.",
+    beli: 7.4,
     cover: { from: "#8a5a1c", to: "#301f08" },
+    photo: {
+      src: "/images/eats/quanjude.jpg",
+      alt: "Quanjude signature Beijing duck plated as a rose on a calligraphy platter",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Quanjude%20Roast%20Duck%20Restaurant%20Beijing%2C%20China",
   },
@@ -259,11 +264,15 @@ export const spots: Spot[] = [
     kind: "restaurant",
     category: "Sandwiches",
     location: "Fox Point, Providence, RI",
-    favorite: "Named specialty sandwiches",
+    favorite: "Providence Monthly",
     review:
-      "Providence institution with creative, stacked sandwiches and a menu full of local lore — a Fox Point essential.",
-    beli: 8.4,
+      "Grilled chicken with melted Muenster on a bun with lettuce, tomato, onion, avocado & Shedd's sauce.",
+    beli: 6.5,
     cover: { from: "#9a6b2f", to: "#33240f" },
+    photo: {
+      src: "/images/eats/geoffs.jpg",
+      alt: "Providence Monthly sandwich from Geoff's — grilled chicken, avocado, and Shedd's sauce",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Geoff%27s%20Superlative%20Sandwiches%20Fox%20Point%20Providence%2C%20RI",
   },
@@ -273,14 +282,12 @@ export const spots: Spot[] = [
     kind: "cafe",
     category: "Vietnamese coffee",
     location: "East Village, NYC",
-    favorite: "Phin-brewed Vietnamese coffee",
-    review:
-      "Rich phin-brewed drinks, matcha, and a calm minimalist atmosphere — my East Village coffee reset.",
-    beli: 9.0,
+    favorite: "Jasmine Pandan Matcha Latte",
+    beli: 8.1,
     cover: { from: "#7d4a24", to: "#2c190c" },
     photo: {
       src: "/images/eats/le-phin.jpg",
-      alt: "Vietnamese coffee and pastries served at Le Phin",
+      alt: "Iced jasmine pandan matcha latte at Le Phin beside Vietnamese coffee art",
     },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Le%20Phin%20East%20Village%2C%20NYC",
@@ -291,14 +298,12 @@ export const spots: Spot[] = [
     kind: "cafe",
     category: "Cafe & mochi donuts",
     location: "Williamsburg, NYC",
-    favorite: "Rice-ball donuts",
-    review:
-      "Cozy cafe best known for specialty drinks and chewy rice-ball donuts in unique seasonal flavors.",
-    beli: 8.4,
+    favorite: "Matcha Tiramisu Latte",
+    beli: 8.2,
     cover: { from: "#8a5a1c", to: "#301f08" },
     photo: {
       src: "/images/eats/brooklyn-ball-factory.jpg",
-      alt: "Specialty coffee and mochi donuts at Brooklyn Ball Factory",
+      alt: "Matcha tiramisu latte in a takeaway cup at Brooklyn Ball Factory",
     },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Brooklyn%20Ball%20Factory%20Williamsburg%2C%20NYC",
@@ -309,14 +314,12 @@ export const spots: Spot[] = [
     kind: "cafe",
     category: "Coffee",
     location: "Long Island City, NYC",
-    favorite: "Espresso & pastry",
-    review:
-      "Sleek neighborhood coffee bar with carefully brewed espresso drinks and a strong pastry program.",
-    beli: 8.5,
+    favorite: "Earl Grey Lavender Matcha",
+    beli: 9.1,
     cover: { from: "#9a6b2f", to: "#33240f" },
     photo: {
       src: "/images/eats/verse.jpg",
-      alt: "Coffee and espresso drinks prepared at Verse",
+      alt: "Layered earl grey lavender matcha drink at Verse",
     },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Verse%20Long%20Island%20City%2C%20NYC",
@@ -327,11 +330,13 @@ export const spots: Spot[] = [
     kind: "cafe",
     category: "Vietnamese coffee",
     location: "Boston, MA",
-    favorite: "Phin-brewed Vietnamese coffee",
-    review:
-      "Rich phin coffee, condensed milk classics, and a calm spot to reset between Boston errands.",
+    favorite: "Matcha Snow",
     beli: 8.3,
     cover: { from: "#6f4a2b", to: "#2a1c10" },
+    photo: {
+      src: "/images/eats/phin-coffee-house.jpg",
+      alt: "Matcha Snow iced drink in a Phin Coffee House cup",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Phin%20Coffee%20House%20Boston%2C%20MA",
   },
@@ -341,11 +346,13 @@ export const spots: Spot[] = [
     kind: "cafe",
     category: "Hong Kong dessert",
     location: "Santa Clara / San Jose, CA",
-    favorite: "Coconut desserts & fruit smoothies",
-    review:
-      "Hong Kong-style coconut desserts and fresh fruit drinks — light, not overly sweet, and perfect for a Valley Fair pit stop.",
-    beli: 8.2,
+    favorite: "Matcha Coconut Cold Brew",
+    beli: 8.0,
     cover: { from: "#7d4a24", to: "#2c190c" },
+    photo: {
+      src: "/images/eats/tong-sui.jpg",
+      alt: "Layered matcha coconut cold brew at Tong Sui Coconut Lab",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Tong%20Sui%20Coconut%20Lab%20Valley%20Fair%20Santa%20Clara%2C%20CA",
   },
@@ -355,11 +362,13 @@ export const spots: Spot[] = [
     kind: "cafe",
     category: "Thai tea",
     location: "North Shattuck, Berkeley, CA",
-    favorite: "Thai milk tea",
-    review:
-      "Berkeley Thai tea specialist — creamy, aromatic milk teas and refreshing Thai drinks on North Shattuck.",
-    beli: 8.1,
+    favorite: "Black Sesame Thai Milk Tea",
+    beli: 7.8,
     cover: { from: "#9a6b3f", to: "#33240f" },
+    photo: {
+      src: "/images/eats/cha-thai.jpg",
+      alt: "Black sesame Thai milk tea with foam at Cha Thai Tea",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Cha%20Thai%20Tea%20North%20Shattuck%20Berkeley%2C%20CA",
   },
@@ -369,11 +378,13 @@ export const spots: Spot[] = [
     kind: "cafe",
     category: "Japanese tea",
     location: "Japantown, San Francisco, CA",
-    favorite: "Matcha & Hokkaido milk soft serve",
-    review:
-      "Japantown tea counter for premium matcha, hojicha, and Hokkaido milk soft serve — everything tastes like tea, on purpose.",
-    beli: 8.8,
+    favorite: "Velvet Soy Matcha + Soy Top",
+    beli: 8.3,
     cover: { from: "#6a5a3e", to: "#24180f" },
+    photo: {
+      src: "/images/eats/maruwu-seicha.jpg",
+      alt: "Velvet soy matcha with soy foam top at Maruwu Seicha",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Maruwu%20Seicha%20Japantown%20San%20Francisco%2C%20CA",
   },
@@ -383,11 +394,13 @@ export const spots: Spot[] = [
     kind: "cafe",
     category: "Japanese cafe",
     location: "Financial District, San Francisco, CA",
-    favorite: "Pour-over & Japanese sandwiches",
-    review:
-      "Japanese-roasted coffee and matcha with onigiri, chashu sandwiches, and quiet FiDi care — a Spro-adjacent daytime favorite.",
-    beli: 8.7,
+    favorite: "Kikyo Kinako Matcha",
+    beli: 6.9,
     cover: { from: "#7a3b2e", to: "#2c140f" },
+    photo: {
+      src: "/images/eats/the-wild-fox.jpg",
+      alt: "Kikyo kinako matcha iced latte at The Wild Fox",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=The%20Wild%20Fox%20Battery%20Street%20San%20Francisco%2C%20CA",
   },
@@ -397,11 +410,13 @@ export const spots: Spot[] = [
     kind: "cafe",
     category: "Coffee",
     location: "Yerba Buena, San Francisco, CA",
-    favorite: "House-roasted espresso",
-    review:
-      "Yerba Buena roasting cafe with dialed-in espresso, pour-overs, and a bright space for a downtown caffeine stop.",
-    beli: 8.0,
+    favorite: "Ube Latte",
+    beli: 7.1,
     cover: { from: "#8f6326", to: "#31230f" },
+    photo: {
+      src: "/images/eats/sextant.jpg",
+      alt: "Iced ube latte at Sextant Coffee Roasters",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Sextant%20Coffee%20Roasters%20Yerba%20Buena%20San%20Francisco%2C%20CA",
   },
@@ -411,14 +426,12 @@ export const spots: Spot[] = [
     kind: "bakery",
     category: "Filipino bakery",
     location: "Sunnyside, NYC",
-    favorite: "Brioche donuts, rotating flavors",
-    review:
-      "Filipino-inspired donut shop known for brioche dough, creative seasonal fillings, and flavors worth the Queens trip.",
-    beli: 9.1,
+    favorite: "Ensaymada Croissant",
+    beli: 8.9,
     cover: { from: "#8a5a2c", to: "#301f08" },
     photo: {
-      src: "/images/eats/kora.webp",
-      alt: "Colorful filled brioche donuts and pastries at Kora",
+      src: "/images/eats/kora.jpg",
+      alt: "Ensaymada croissant topped with shredded cheese at Kora",
     },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Kora%20Sunnyside%2C%20NYC",
@@ -429,14 +442,12 @@ export const spots: Spot[] = [
     kind: "bakery",
     category: "Pastry",
     location: "Soho, NYC",
-    favorite: "The Cronut",
-    review:
-      "Home of the Cronut — inventive pastries and a rotating lineup of creative baked desserts in Soho.",
-    beli: 8.7,
+    favorite: "What-a-Melon Soft Serve",
+    beli: 7.9,
     cover: { from: "#7a4a2e", to: "#2c140f" },
     photo: {
-      src: "/images/eats/dominique-ansel.jpeg",
-      alt: "Signature Cronut and pastries at Dominique Ansel Bakery",
+      src: "/images/eats/dominique-ansel.jpg",
+      alt: "What-a-Melon soft serve on a watermelon slice at Dominique Ansel Bakery",
     },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Dominique%20Ansel%20Bakery%20Soho%2C%20NYC",
@@ -447,14 +458,12 @@ export const spots: Spot[] = [
     kind: "dessert",
     category: "Hong Kong dessert",
     location: "Flushing, NYC",
-    favorite: "Sweet soups & tofu pudding",
-    review:
-      "Popular spot for Hong Kong-style sweet soups, tofu pudding, and warm dessert bowls in Flushing.",
+    favorite: "Matcha Shaved Ice Cream & Milk Custard w/ Mango",
     beli: 8.2,
     cover: { from: "#7a3b2e", to: "#2c140f" },
     photo: {
-      src: "/images/eats/yuanyang-dessert.jpeg",
-      alt: "Hong Kong-style sweet soups and desserts at YuanYang Dessert",
+      src: "/images/eats/yuanyang-dessert.jpg",
+      alt: "Matcha shaved ice and milk custard with mango at YuanYang Dessert",
     },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=YuanYang%20Dessert%20Flushing%2C%20NYC",
@@ -465,14 +474,12 @@ export const spots: Spot[] = [
     kind: "dessert",
     category: "Taiwanese dessert",
     location: "Flushing / Bayside, NYC",
-    favorite: "Taro balls & shaved ice",
-    review:
-      "Taiwanese dessert chain famous for taro balls, shaved ice, herbal jelly, and customizable sweet bowls.",
-    beli: 8.3,
+    favorite: "Pudding & Q Mochi Milk Shaved Ice",
+    beli: 7.5,
     cover: { from: "#9a6b2f", to: "#33240f" },
     photo: {
-      src: "/images/eats/meet-fresh.webp",
-      alt: "Taiwanese grass jelly, taro balls, and shaved ice at Meet Fresh",
+      src: "/images/eats/meet-fresh.jpg",
+      alt: "Milk shaved ice with pudding and Q mochi at Meet Fresh",
     },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Meet%20Fresh%20USA%20Flushing%20/%20Bayside%2C%20NYC",
@@ -483,11 +490,13 @@ export const spots: Spot[] = [
     kind: "dessert",
     category: "Chinese frozen yogurt",
     location: "Rincon Hill, San Francisco, CA",
-    favorite: "Chinese-style froyo",
-    review:
-      "Here specifically for the house-made Chinese frozen yogurt — tart-sweet buttermilk base with lemon curd blueberry or chocolate cherry honey almond.",
-    beli: 8.6,
+    favorite: "Froyo w/ Lemon Curd and Blueberry Sauce",
+    beli: 7.3,
     cover: { from: "#7a4a2e", to: "#2c140f" },
+    photo: {
+      src: "/images/eats/yuja.jpg",
+      alt: "Frozen yogurt topped with lemon curd and blueberry sauce at Yuja",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Yuja%20Rincon%20Hill%20San%20Francisco%2C%20CA",
   },
@@ -497,11 +506,13 @@ export const spots: Spot[] = [
     kind: "dessert",
     category: "Ice cream",
     location: "Providence, RI",
-    favorite: "Seasonal scoops",
-    review:
-      "Providence scoop shop with inventive flavors and a neighborhood sweetness that feels local, not corporate.",
-    beli: 8.1,
+    favorite: "Matcha & Mixed Berries Macaron Ice Cream Sandwich",
+    beli: 8.2,
     cover: { from: "#6f4a2b", to: "#2a1c10" },
+    photo: {
+      src: "/images/eats/tricycle.jpg",
+      alt: "Matcha and mixed berries macaron ice cream sandwich at Tricycle",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Tricycle%20Ice%20Cream%20Providence%2C%20RI",
   },
@@ -511,11 +522,13 @@ export const spots: Spot[] = [
     kind: "dessert",
     category: "Ice cream",
     location: "San Francisco, CA",
-    favorite: "Classic scoops & freezes",
-    review:
-      "Old-school SF ice cream counter — straightforward scoops, freezes, and the kind of classic treat that never needs reinventing.",
-    beli: 8.0,
+    favorite: "Halo Halo w/ Ube Ice Cream",
+    beli: 7.2,
     cover: { from: "#8a5a2c", to: "#301f08" },
+    photo: {
+      src: "/images/eats/normans.jpg",
+      alt: "Halo-halo with a scoop of ube ice cream at Norman's",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Norman%27s%20Ice%20Cream%20%26%20Freezes%20San%20Francisco%2C%20CA",
   },
@@ -525,11 +538,13 @@ export const spots: Spot[] = [
     kind: "dessert",
     category: "Taiwanese shaved snow",
     location: "Lower Haight, San Francisco, CA",
-    favorite: "Shaved snow",
-    review:
-      "Taiwanese shaved snow made with Straus dairy — light, creamy ribbons that melt like fresh powder. Cereal and ube are hard to beat.",
-    beli: 8.9,
+    favorite: "Cereal Snow w/ Mochi",
+    beli: 8.2,
     cover: { from: "#7d4a24", to: "#2c190c" },
+    photo: {
+      src: "/images/eats/powder.jpg",
+      alt: "Cereal snow with mochi at Powder",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Powder%20Shaved%20Snow%20Lower%20Haight%20San%20Francisco%2C%20CA",
   },
@@ -539,11 +554,13 @@ export const spots: Spot[] = [
     kind: "dessert",
     category: "Frozen yogurt",
     location: "Cambridge, MA",
-    favorite: "Self-serve froyo & toppings",
-    review:
-      "Cambridge frozen yogurt classic — tart yogurt, endless toppings, and an easy post-class or post-walk treat.",
-    beli: 7.8,
+    favorite: "Original Froyo w/ Strawberries & Mochi",
+    beli: 8.7,
     cover: { from: "#8f6326", to: "#31230f" },
+    photo: {
+      src: "/images/eats/berryline.jpg",
+      alt: "Original froyo with strawberries and mochi at Berryline",
+    },
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Berryline%20Cambridge%2C%20MA",
   },

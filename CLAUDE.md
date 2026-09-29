@@ -101,36 +101,36 @@ Repository
 
 # Design Inspiration
 
-Use inspiration from
+Direction: **NYC kid who happens to be an engineer** — streetwear as visual
+language, not costume.
 
-* Nike SNKRS
-* Apple
-* Linear
+Think:
 
-Do NOT copy them.
+* SNKRS × NYC subway × editorial street photography × engineering portfolio
 
-Instead, capture their design philosophy.
+Not:
+
+* Supreme clone with code on it
+* Generic Apple/Linear developer template
 
 Characteristics:
 
-* premium
-* editorial
-* confident
-* minimal
-* clean
-* sophisticated
-* image-forward
-* intentional whitespace
+* premium but personal
+* editorial / image-forward
+* bold condensed type
+* mostly blue (navy → denim washes)
+* paper grain / scanned imperfections
+* confident whitespace
 * restrained motion
 
 Avoid:
 
+* box-logo / graffiti costume aesthetics
+* neon colors / rainbow UI
 * glassmorphism everywhere
-* neon colors
 * generic portfolio templates
 * flashy effects
 * excessive gradients
-* unnecessary complexity
 
 ---
 
@@ -140,10 +140,12 @@ Support
 
 * Light mode
 * Dark mode
-* System preference
+* System preference (default)
 * Persisted theme
 
-Dark mode should use charcoal instead of pure black.
+Theme control lives as a quiet fixed control in the bottom-left corner —
+not in the navbar. Dark mode should feel like night-city navy/charcoal,
+never pure black.
 
 Transitions between themes should feel smooth.
 
@@ -151,61 +153,82 @@ Transitions between themes should feel smooth.
 
 # Brand & Color System
 
-The palette should feel personal, memorable, and premium—luxury, not
-"bright and colorful." The interface stays approximately 90–95% neutral,
-with brand and accent colors used intentionally.
+NYC × streetwear palette: mostly blue, warm paper neutrals, tiny accent
+hits. The interface stays approximately 90% blue-neutral — personality
+comes from type, texture, and photography, not rainbow chrome.
 
 Do NOT use purple as the primary brand color.
 
 ## Brand Colors
 
-* Primary brand color: Deep Navy
-* Accent color: Muted Golden Yellow
+* Primary: Deep navy / midnight blue
+* Secondary atmosphere: Washed / denim blues
+* Background: Warm paper / newsprint
+* Accent punctuation: Taxi yellow (rare), chrome silver, rare signal red
 
-Navy is used for branding, active navigation, links, subtle decorative
-elements, and primary buttons. Gold is the accent, used sparingly.
+Navy is used for branding, active navigation, links, decorative
+elements, and primary buttons. Taxi yellow is the main accent, used
+sparingly — think cab flash, not a yellow site. Chrome and signal red
+are micro-only. Mets orange appears only on rivalry stickers.
 
 ## Light Theme
 
-* Background: warm white
-* Cards: soft off-white
-* Primary text: near black
-* Secondary text: slate gray
-* Borders: light gray
+* Background: warm paper
+* Elevated surfaces: soft off-white paper
+* Primary text: ink
+* Secondary text: slate
+* Borders: warm gray
+* Atmosphere: denim wash
 * Accent: muted golden yellow
 
 ## Dark Theme
 
-* Background: deep charcoal (never pure black)
-* Cards: slightly lighter charcoal
+* Background: night-city navy (never pure black)
+* Cards: slightly lighter blue-charcoal
 * Primary text: soft white
-* Secondary text: muted gray
+* Secondary text: muted blue-gray
 * Accent: muted golden yellow
-* Navy becomes a supporting color rather than disappearing
+* Navy lifts so it stays visible on dark
 
 ## Color Usage Rules
 
-Do NOT overuse the accent color. Never create entire yellow sections.
+Do NOT overuse accent colors. Never create entire yellow or red sections.
 
-Yellow (gold) should primarily appear in:
+Gold should primarily appear in:
 
-* active navigation
-* buttons
-* links
-* hover states
-* small badges
-* highlights
-* subtle decorative elements
+* small highlights and underlines
+* rare CTAs / badges
+* hover punctuation
 
-The website should remain elegant and restrained. Let typography and
-whitespace create visual interest—color supports the design, it does not
-dominate it.
+Photography and album/food imagery supply life and color. UI stays blue-paper.
 
+## Texture
+
+Subtle film/paper grain on the body (and stronger on hero photography /
+project covers). Keep opacity low — if grain reads first, dial it back.
+
+## Quiet NYC signals
+
+Use these as attitude, not costume (no skylines, no I♥NY):
+
+* Taxi yellow as rare accent (links/underlines/badges — never full sections)
+* Pigeon cursor + 404 easter egg
+* Yankees-adjacent navy pinstripe (whisper background)
+* BX / QNS pole stickers (Yankees ↔ Mets energy, no league logos)
+* Transparent bridge cable arcs on the hero
+* Place crumbs — Flushing · Amherst · San Francisco
+* City-block rules between sections
+* MetroCard-inspired project deck backs
+* Late-night navy wash on footer + experience map stage
+* `J·Y` / `EST. NYC` stamp (footer + quiet corner)
+
+Config lives in `siteConfig.places` / `siteConfig.stamp`.
+Subway line bullets / STOP· labels were retired — too “system.”
 ## Section Identity
 
 Maintain a cohesive design system with subtle per-section personality:
 
-* Home / Projects / Experience: neutral with navy accents
+* Home / Projects / Experience: navy + denim washes
 * Eats: slightly warmer tones; gold may appear a little more frequently
 * Music: very subtle purple accents only where they complement album
   artwork or Spotify UI—purple never becomes primary
@@ -214,20 +237,28 @@ Maintain a cohesive design system with subtle per-section personality:
 
 Colors are defined as semantic CSS variables in `src/styles/globals.css`
 and mapped into Tailwind via `@theme`. Components reference semantic
-tokens (`brand`, `accent`, `primary`, `link`, `foreground`, `muted`,
-`background`, `border`), never raw hex values, so themes and section
-identity swap cleanly.
+tokens (`brand`, `accent`, `wash`, `chrome`, `signal`, `primary`, `link`,
+`foreground`, `muted`, `background`, `border`), never raw hex values.
 
 Token groups:
 
 * `brand` / `brand-strong` / `brand-foreground` — navy
+* `wash` / `wash-strong` — denim atmosphere
 * `accent` / `accent-strong` / `accent-foreground` — gold
+* `chrome` / `signal` — micro punctuation
 * `primary` / `primary-hover` / `primary-foreground` — navy (buttons)
 * `link` / `link-hover` — navy
 * `plum` — reserved for the Music section only
 
 Section identity is applied with scoped classes (`.section-eats`,
 `.section-music`) that re-point tokens for their subtree.
+
+## Typography
+
+* Display: Barlow Condensed (bold, uppercase for brand/section titles)
+* Body: IBM Plex Sans
+
+Loud type, quiet layout.
 
 ## Buttons
 
@@ -245,9 +276,9 @@ scales, border becomes navy, subtle shadow, yellow underline animation
 
 ## Overall Feeling
 
-Elegant. Intentional. Premium. Minimal. Confident.
+NYC energy. Editorial. Intentional. Mostly blue. Personal without costume.
 
-Not colorful, playful, or over-designed.
+Not colorful, not generic SaaS, not a streetwear parody.
 
 ---
 
@@ -359,7 +390,7 @@ Each project has its own dynamic route.
 
 Examples
 
-/projects/crisis360
+/projects/map-response
 
 /projects/vaip
 
@@ -525,15 +556,11 @@ Avoid animations that become annoying after repeated visits.
 
 # Typography
 
-Large headings.
+Display: Barlow Condensed — bold, often uppercase for brand and section titles.
+Body: IBM Plex Sans — clean grotesque for reading UI.
 
-Editorial hierarchy.
-
-Comfortable reading width.
-
-Excellent spacing.
-
-Use next/font for optimized loading.
+Large headings. Editorial hierarchy. Comfortable reading width. Excellent
+spacing. Loud type, quiet layout. Use next/font for optimized loading.
 
 ---
 

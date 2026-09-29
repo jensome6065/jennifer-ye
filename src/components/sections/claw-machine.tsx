@@ -25,7 +25,8 @@ import {
   collideClawTip,
   cableYForBallContact,
   gripBallPosition,
-  pickGuaranteedTarget,
+  findHitTarget,
+  aimCorrection,
   stepPhysics,
   type SimBall,
   type SimBounds,
@@ -98,6 +99,7 @@ export function ClawMachine({
   const [renderBalls, setRenderBalls] = useState<RenderBall[]>([]);
   const [chuteProject, setChuteProject] = useState<Project | null>(null);
   const [selected, setSelected] = useState<Project | null>(null);
+  const [missHint, setMissHint] = useState<string | null>(null);
   const [announce, setAnnounce] = useState("");
   const [baySize, setBaySize] = useState({ w: 400, h: 320 });
 
@@ -166,6 +168,7 @@ export function ClawMachine({
     phaseRef.current = "idle";
     setPhase("idle");
     setChuteProject(null);
+    setMissHint(null);
     if (pool[0]) setSelected((s) => s ?? pool[0]!);
     syncRender();
   }, [pool, syncRender]);
@@ -267,6 +270,7 @@ export function ClawMachine({
   const setMoveDir = (dir: -1 | 0 | 1) => {
     moveDirRef.current = dir;
     setMoveDirState(dir);
+    if (dir !== 0) setMissHint(null);
   };
 
   const aimFromClientX = (clientX: number) => {
@@ -277,18 +281,43 @@ export function ClawMachine({
       boundsRef.current.width - 28,
       Math.max(28, x),
     );
+    setMissHint(null);
   };
+
+  const resolveMissHint = useCallback(
+    (clawX: number) => {
+      const correction = aimCorrection(ballsRef.current, clawX);
+      if (!correction) {
+        return copy.missHint ?? "Line the claw up over a ball, then grab.";
+      }
+      if (correction.direction === "left") {
+        return (
+          copy.missHintLeft ??
+          "Almost — move slightly left to grab that ball."
+        );
+      }
+      return (
+        copy.missHintRight ??
+        "Almost — move slightly right to grab that ball."
+      );
+    },
+    [copy.missHint, copy.missHintLeft, copy.missHintRight],
+  );
 
   const runGrab = useCallback(async () => {
     if (phaseRef.current !== "idle" || ballsRef.current.length === 0) return;
 
-    const target = pickGuaranteedTarget(
-      ballsRef.current,
-      clawRef.current.x,
-    );
-    if (!target) return;
+    setMissHint(null);
+    const aimX = clawRef.current.x;
+    const target = findHitTarget(ballsRef.current, aimX);
 
     if (reduceMotion) {
+      if (!target) {
+        const hint = resolveMissHint(aimX);
+        setMissHint(hint);
+        setAnnounce(`${copy.missAnnounce ?? "Missed"} — ${hint}`);
+        return;
+      }
       const project = projectById.get(target.id);
       ballsRef.current = ballsRef.current.filter((b) => b.id !== target.id);
       if (project) {
@@ -306,50 +335,69 @@ export function ClawMachine({
     await wait(260);
 
     const bounds = boundsRef.current;
-    const startX = clawRef.current.x;
-    const grabX = target.x;
-
-    // Descend only until the tip rests on the ball — never through it.
-    const contactCable = cableYForBallContact(
-      target,
-      TIP_BELOW_CABLE,
-      TIP_RADIUS,
-      CLAW_HOME_Y + 36,
-      bounds.floorY - TIP_BELOW_CABLE - target.r,
-    );
+    // Drop straight down — no auto-slide onto a prize.
+    const maxCable = bounds.floorY - TIP_BELOW_CABLE - 18;
+    const contactCable = target
+      ? cableYForBallContact(
+          target,
+          TIP_BELOW_CABLE,
+          TIP_RADIUS,
+          CLAW_HOME_Y + 36,
+          maxCable,
+        )
+      : maxCable;
 
     await animateCable(clawRef, contactCable, 900, (t) => {
-      clawRef.current.x = startX + (grabX - startX) * Math.min(1, t * 1.15);
-
       collideClawTip(
         ballsRef.current,
         clawRef.current.x,
         clawRef.current.cableY + TIP_BELOW_CABLE,
         TIP_RADIUS,
         true,
-        target.id,
+        target?.id,
       );
 
-      // Center under jaws; clamp tip to the crown of the ball
-      if (t > 0.3) {
-        target.x += (clawRef.current.x - target.x) * 0.2;
-        target.vx *= 0.75;
-      }
+      if (!target) return;
 
+      // Soft contact stop once the tip reaches the crown — never pull the ball sideways.
       const tipY = clawRef.current.cableY + TIP_BELOW_CABLE;
       const crown = target.y - target.r;
       if (tipY > crown - TIP_RADIUS * 0.15) {
         clawRef.current.cableY =
           crown - TIP_RADIUS * 0.15 - TIP_BELOW_CABLE;
-        // Early stop once we've made solid contact
         if (t > 0.45) return false;
       }
     });
 
-    // Final seat: tip on crown, ball centered
-    clawRef.current.x = target.x;
+    // Re-check at the bottom — balls may have shifted during the drop.
+    const gripped = findHitTarget(ballsRef.current, clawRef.current.x);
+
+    if (!gripped) {
+      // Empty close, lift home, coach the player.
+      phaseRef.current = "grip";
+      setPhase("grip");
+      clawRef.current.open = false;
+      setClawOpen(false);
+      await wait(220);
+
+      phaseRef.current = "lift";
+      setPhase("lift");
+      await animateCable(clawRef, CLAW_HOME_Y, 640);
+
+      const hint = resolveMissHint(clawRef.current.x);
+      setMissHint(hint);
+      setAnnounce(`${copy.missAnnounce ?? "Missed"} — ${hint}`);
+
+      clawRef.current.open = false;
+      setClawOpen(false);
+      phaseRef.current = "idle";
+      setPhase("idle");
+      return;
+    }
+
+    // Seat tip on the gripped ball (already within the hit window).
     clawRef.current.cableY = cableYForBallContact(
-      target,
+      gripped,
       TIP_BELOW_CABLE,
       TIP_RADIUS,
       CLAW_HOME_Y,
@@ -357,7 +405,6 @@ export function ClawMachine({
     );
     await wait(100);
 
-    // Close jaws — ball hangs below tips, not intersecting them
     phaseRef.current = "grip";
     setPhase("grip");
     clawRef.current.open = false;
@@ -366,14 +413,14 @@ export function ClawMachine({
       clawRef.current.x,
       clawRef.current.cableY,
       TIP_BELOW_CABLE,
-      target.r,
+      gripped.r,
     );
-    target.x = grip.x;
-    target.y = grip.y;
-    target.vx = 0;
-    target.vy = 0;
-    target.held = true;
-    heldIdRef.current = target.id;
+    gripped.x = grip.x;
+    gripped.y = grip.y;
+    gripped.vx = 0;
+    gripped.vy = 0;
+    gripped.held = true;
+    heldIdRef.current = gripped.id;
     await wait(280);
 
     phaseRef.current = "lift";
@@ -387,10 +434,10 @@ export function ClawMachine({
     setPhase("chute");
     clawRef.current.open = true;
     setClawOpen(true);
-    const project = projectById.get(target.id) ?? null;
+    const project = projectById.get(gripped.id) ?? null;
     setChuteProject(project);
 
-    ballsRef.current = ballsRef.current.filter((b) => b.id !== target.id);
+    ballsRef.current = ballsRef.current.filter((b) => b.id !== gripped.id);
     heldIdRef.current = null;
 
     await wait(650);
@@ -403,7 +450,13 @@ export function ClawMachine({
     setClawOpen(false);
     phaseRef.current = "idle";
     setPhase("idle");
-  }, [reduceMotion, copy.resultAnnounce, projectById]);
+  }, [
+    reduceMotion,
+    copy.resultAnnounce,
+    copy.missAnnounce,
+    projectById,
+    resolveMissHint,
+  ]);
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "ArrowLeft") {
@@ -705,6 +758,21 @@ export function ClawMachine({
               {busy ? copy.busyLabel : copy.actionLabel}
             </Button>
           </div>
+          <AnimatePresence>
+            {missHint && (
+              <motion.p
+                key={missHint}
+                role="status"
+                initial={reduceMotion ? false : { opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
+                transition={{ duration: 0.25, ease: EASE_OUT_EXPO }}
+                className="mx-2.5 mb-3 rounded-lg bg-accent/15 px-3.5 py-2.5 text-sm font-medium text-accent ring-1 ring-accent/35 sm:mx-3.5"
+              >
+                {missHint}
+              </motion.p>
+            )}
+          </AnimatePresence>
         </div>
 
         <p className="sr-only" aria-live="polite" aria-atomic="true">

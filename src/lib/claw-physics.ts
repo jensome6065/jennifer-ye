@@ -203,44 +203,72 @@ export function tipTouchesBall(
   return tipY >= ball.y - ball.r - tipRadius * 0.25;
 }
 
-/** Always returns a ball when the pit is non-empty — nearest under the claw. */
-export function pickGuaranteedTarget(
+/**
+ * Successful grab only when the claw is roughly centered over a ball.
+ * Prefers the highest (top-of-pile) ball within the horizontal hit window.
+ */
+export function findHitTarget(
+  balls: SimBall[],
+  clawX: number,
+  /** Max |dx| as a fraction of ball radius. Tighter = harder. */
+  centerFraction = 0.55,
+): SimBall | null {
+  let best: SimBall | null = null;
+  let bestScore = Infinity;
+
+  for (const b of balls) {
+    if (b.held) continue;
+    const dx = Math.abs(b.x - clawX);
+    if (dx > b.r * centerFraction) continue;
+    // Prefer higher balls, then closer in X
+    const score = b.y + dx * 0.35;
+    if (score < bestScore) {
+      bestScore = score;
+      best = b;
+    }
+  }
+
+  return best;
+}
+
+export type AimDirection = "left" | "right";
+
+/** Nearest free ball in X — used to coach a near-miss. */
+export function nearestBallByX(
   balls: SimBall[],
   clawX: number,
 ): SimBall | null {
-  const free = balls.filter((b) => !b.held);
-  if (free.length === 0) return null;
-
-  let best = free[0]!;
-  let bestScore = Infinity;
-  for (const b of free) {
+  let best: SimBall | null = null;
+  let bestDx = Infinity;
+  for (const b of balls) {
+    if (b.held) continue;
     const dx = Math.abs(b.x - clawX);
-    // Prefer closer in X; slight preference for higher (easier) balls
-    const score = dx * 2.2 + (1 - b.y * 0.001);
-    if (score < bestScore) {
-      bestScore = score;
+    if (dx < bestDx) {
+      bestDx = dx;
       best = b;
     }
   }
   return best;
 }
 
-export function findGraspTarget(
+/**
+ * Which way to nudge the claw to center over the nearest ball.
+ * Returns null when the pit is empty or the claw is already dead-center.
+ */
+export function aimCorrection(
   balls: SimBall[],
   clawX: number,
-  clawY: number,
-  reach: number,
-): SimBall | null {
-  let best: SimBall | null = null;
-  let bestDist = reach;
-  for (const b of balls) {
-    if (b.held) continue;
-    const d = Math.hypot(b.x - clawX, b.y - clawY);
-    if (d < bestDist) {
-      bestDist = d;
-      best = b;
-    }
+): { direction: AimDirection; ball: SimBall; dx: number } | null {
+  const ball = nearestBallByX(balls, clawX);
+  if (!ball) return null;
+  const dx = ball.x - clawX;
+  if (Math.abs(dx) < 0.5) {
+    // Effectively centered — generic coaching (height/pile miss).
+    return null;
   }
-  // Fallback: never return empty if anything is in the pit
-  return best ?? pickGuaranteedTarget(balls, clawX);
+  return {
+    direction: dx > 0 ? "right" : "left",
+    ball,
+    dx: Math.abs(dx),
+  };
 }

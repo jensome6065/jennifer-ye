@@ -1,23 +1,25 @@
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Barlow_Condensed, IBM_Plex_Sans } from "next/font/google";
 
 /**
- * Body/UI typeface — Inter variable, optimized via next/font.
- * Exposed as `--font-inter` and consumed by `--font-sans` in globals.css.
+ * Body/UI typeface — IBM Plex Sans.
+ * Clean grotesque with more character than Inter; pairs with the condensed
+ * display without reading like a generic developer portfolio.
  */
-export const inter = Inter({
+export const sans = IBM_Plex_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  weight: ["400", "500", "600"],
+  variable: "--font-sans-family",
 });
 
 /**
- * Display typeface for large editorial headings.
- * Space Grotesk gives a confident, slightly technical character
- * without reading like a generic developer portfolio.
+ * Display typeface — Barlow Condensed.
+ * Bold, streetwear-editorial energy (SNKRS / subway signage attitude)
+ * without costume fonts. Used for names, section titles, large labels.
  */
-export const display = Space_Grotesk({
+export const display = Barlow_Condensed({
   subsets: ["latin"],
   display: "swap",
-  weight: ["500", "600", "700"],
+  weight: ["600", "700"],
   variable: "--font-display",
 });

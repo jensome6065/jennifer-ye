@@ -17,7 +17,8 @@ export function Eats() {
     <Container as="section" id="eats" className="section-eats py-24 sm:py-32">
       <SectionHeader
         as="h2"
-        eyebrow="Eats & drinks"
+        eyebrow="Eats"
+        lineKey="eats"
         title="The menu"
         description="Places worth returning to — read it like a restaurant menu. Scores are my Beli rankings (out of 10), not prices. Filter by restaurants, cafes, or sweet treats."
       />

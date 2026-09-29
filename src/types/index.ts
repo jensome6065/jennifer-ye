@@ -23,4 +23,8 @@ export interface SiteConfig {
   url: string;
   nav: NavItem[];
   social: SocialLink[];
+  /** Journey crumbs shown as a transfer strip. */
+  places: string[];
+  /** Quiet corner / footer brand stamp. */
+  stamp: { mark: string; caption: string };
 }

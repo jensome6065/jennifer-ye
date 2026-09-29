@@ -12,13 +12,14 @@ export function Music() {
   const albums = getAlbums();
 
   return (
-    <div className="border-t border-border">
+    <div className="block-rule">
       <Container as="section" id="music" className="section-music py-24 sm:py-32">
         <SectionHeader
           as="h2"
           eyebrow="Music"
+          lineKey="music"
           title="On the shelf"
-          description="Pull a record onto the platter — the can't-skip track plays right here. One song from each album I keep coming back to."
+          description="Pull a record onto the deck — a short preview of the can't-skip track starts spinning. One song from each album I keep coming back to."
         />
         <div className="mt-14 sm:mt-16">
           <RecordShelf albums={albums} />

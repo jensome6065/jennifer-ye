@@ -30,11 +30,13 @@ export interface Album {
   year: string;
   /** The standout track — the one on repeat. */
   favoriteSong: string;
-  /**
-   * Spotify track id for `favoriteSong` — powers the in-page embed player on
-   * the turntable (`spotify:track:<id>` / embed URL).
-   */
+  /** Spotify track id for `favoriteSong` (deep link to the full song). */
   spotifyTrackId: string;
+  /**
+   * ~30s AAC preview for in-page playback (iTunes). Browsers allow this from a
+   * user gesture without Spotify embed chrome or login.
+   */
+  previewUrl: string;
   /**
    * Two-tone gradient endpoints (CSS colors) for the generated cover, used
    * until real artwork is added. Kept muted so plum can support without
@@ -47,19 +49,9 @@ export interface Album {
   spotifyUrl?: string;
 }
 
-/** Build a Spotify embed URL for a track (compact player). */
-export function spotifyTrackEmbedUrl(
-  trackId: string,
-  options?: { autoplay?: boolean },
-): string {
-  const params = new URLSearchParams({ utm_source: "generator", theme: "0" });
-  if (options?.autoplay) params.set("autoplay", "1");
-  return `https://open.spotify.com/embed/track/${trackId}?${params.toString()}`;
-}
-
-/** Spotify URI for the IFrame API. */
-export function spotifyTrackUri(trackId: string): string {
-  return `spotify:track:${trackId}`;
+/** Deep link to a track on Spotify. */
+export function spotifyTrackUrl(trackId: string): string {
+  return `https://open.spotify.com/track/${trackId}`;
 }
 
 /**
@@ -74,6 +66,8 @@ export const albums: Album[] = [
     year: "2024",
     favoriteSong: "Free Now",
     spotifyTrackId: "6nN8W5zHOii0P61I8eSdR3",
+    previewUrl:
+      "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/8a/c0/45/8ac0451b-7167-1720-3f11-7920afa94a83/mzaf_18172643508956337729.plus.aac.p.m4a",
     cover: { from: "#3a3550", to: "#15131f" },
     artwork: {
       src: "/images/music/the-secret-of-us.jpg",
@@ -88,6 +82,8 @@ export const albums: Album[] = [
     year: "2015",
     favoriteSong: "Angel",
     spotifyTrackId: "5buWSg8MDfzReA0794pchb",
+    previewUrl:
+      "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/78/5c/e5/785ce560-e408-5eb0-ccf3-e1e7424ff738/mzaf_13043875919120370213.plus.aac.p.m4a",
     cover: { from: "#463a54", to: "#181320" },
     artwork: {
       src: "/images/music/beauty-behind-the-madness.jpg",
@@ -102,6 +98,8 @@ export const albums: Album[] = [
     year: "2022",
     favoriteSong: "Open Arms (feat. Travis Scott)",
     spotifyTrackId: "0xaFw2zDYf1rIJWl2dXiSF",
+    previewUrl:
+      "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/be/e1/5c/bee15c13-45e4-a4de-a48d-407cc06a0cb6/mzaf_12967475487789835787.plus.aac.p.m4a",
     cover: { from: "#3d3a55", to: "#141422" },
     artwork: {
       src: "/images/music/sos.jpg",
@@ -116,6 +114,8 @@ export const albums: Album[] = [
     year: "2017",
     favoriteSong: "Delicate",
     spotifyTrackId: "6NFyWDv5CjfwuzoCkw47Xf",
+    previewUrl:
+      "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/a7/24/e8/a724e804-d5df-f7a7-24cc-09df9df57a79/mzaf_4087189896444308455.plus.aac.p.m4a",
     cover: { from: "#33405a", to: "#12151f" },
     artwork: {
       src: "/images/music/reputation.jpg",
@@ -130,6 +130,8 @@ export const albums: Album[] = [
     year: "2022",
     favoriteSong: "A Keeper",
     spotifyTrackId: "0nAZGkBGKQCXyaoSJfRhC1",
+    previewUrl:
+      "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/2d/e3/9d/2de39d01-7937-db23-f66e-71fe23e58470/mzaf_1127878189669382614.plus.aac.p.m4a",
     cover: { from: "#5a3a4a", to: "#1e131a" },
     artwork: {
       src: "/images/music/honestly-nevermind.jpg",
@@ -144,6 +146,8 @@ export const albums: Album[] = [
     year: "2016",
     favoriteSong: "Into You",
     spotifyTrackId: "63y6xWR4gXz7bnUGOk8iI6",
+    previewUrl:
+      "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/1d/d7/a6/1dd7a60d-bd93-4be4-4fc2-32a37d48c372/mzaf_11748079115747040226.plus.aac.p.m4a",
     cover: { from: "#39485a", to: "#13181f" },
     artwork: {
       src: "/images/music/dangerous-woman.jpg",
@@ -158,6 +162,8 @@ export const albums: Album[] = [
     year: "2018",
     favoriteSong: "Void",
     spotifyTrackId: "747Ki1XZhdywdnrbip0Yak",
+    previewUrl:
+      "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/05/19/13/05191331-9b67-6c9f-c8ab-65425ee9ff20/mzaf_12666906693856504962.plus.aac.p.m4a",
     cover: { from: "#2f3548", to: "#12151c" },
     artwork: {
       src: "/images/music/hard-to-imagine.jpg",
@@ -172,6 +178,8 @@ export const albums: Album[] = [
     year: "2020",
     favoriteSong: "Wurli",
     spotifyTrackId: "5MSshyHGM9ajWSEoBcR0jv",
+    previewUrl:
+      "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e1/79/d7/e179d7b1-f51b-38c9-6484-186736b74259/mzaf_17429421237886882616.plus.aac.p.m4a",
     cover: { from: "#3a4558", to: "#141820" },
     artwork: {
       src: "/images/music/what-could-possibly-go-wrong.jpg",
@@ -186,6 +194,8 @@ export const albums: Album[] = [
     year: "2026",
     favoriteSong: "Secondhand (feat. Rema)",
     spotifyTrackId: "0ZLi9vyYoUnQHgJiLcjwyw",
+    previewUrl:
+      "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d8/38/a0/d838a072-db15-df92-cf6d-c08287be6337/mzaf_16654264586004554581.plus.aac.p.m4a",
     cover: { from: "#4a3548", to: "#1a1218" },
     artwork: {
       src: "/images/music/octane.jpg",

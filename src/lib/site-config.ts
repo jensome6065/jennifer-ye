@@ -16,6 +16,11 @@ export const siteConfig: SiteConfig = {
     { label: "Experience", href: "/experience" },
     { label: "Lifestyle", href: "/lifestyle" },
   ],
+  places: ["Flushing", "Amherst", "San Francisco"],
+  stamp: {
+    mark: "J·Y",
+    caption: "Est. NYC",
+  },
   social: [
     {
       platform: "github",

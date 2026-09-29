@@ -7,60 +7,53 @@ import { cn } from "@/lib/utils";
 
 type ThemeOption = "light" | "dark" | "system";
 
-const OPTIONS: { value: ThemeOption; label: string; Icon: typeof Sun }[] = [
-  { value: "light", label: "Light", Icon: Sun },
-  { value: "system", label: "System", Icon: Monitor },
-  { value: "dark", label: "Dark", Icon: Moon },
-];
+const CYCLE: ThemeOption[] = ["system", "light", "dark"];
+
+const META: Record<
+  ThemeOption,
+  { label: string; Icon: typeof Sun; nextHint: string }
+> = {
+  system: {
+    label: "System",
+    Icon: Monitor,
+    nextHint: "Switch to light theme",
+  },
+  light: { label: "Light", Icon: Sun, nextHint: "Switch to dark theme" },
+  dark: { label: "Dark", Icon: Moon, nextHint: "Switch to system theme" },
+};
 
 /**
- * Segmented theme control cycling through light / system / dark.
- * A sliding indicator marks the active option. Renders a neutral
- * placeholder until mounted to avoid a hydration flash.
+ * Quiet corner theme control. Defaults to system via next-themes; sits
+ * fixed bottom-left so it stays out of the navbar and out of the way.
+ * Single button cycles system → light → dark. Low-opacity until hover/focus.
  */
 export function ThemeToggle({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme();
   const mounted = useMounted();
 
-  const active: ThemeOption = mounted ? (theme as ThemeOption) ?? "system" : "system";
+  const active: ThemeOption = mounted
+    ? ((theme as ThemeOption | undefined) ?? "system")
+    : "system";
+  const { Icon, label, nextHint } = META[active];
+  const next =
+    CYCLE[(CYCLE.indexOf(active) + 1) % CYCLE.length] ?? "system";
 
   return (
-    <div
-      role="radiogroup"
-      aria-label="Color theme"
+    <button
+      type="button"
+      aria-label={`Color theme: ${label}. ${nextHint}.`}
+      title={`${label} · ${nextHint}`}
+      onClick={() => setTheme(next)}
       className={cn(
-        "relative inline-flex items-center rounded-full border border-border bg-background-elevated/60 p-0.5 backdrop-blur-sm",
+        "fixed bottom-5 left-5 z-50 flex h-9 w-9 items-center justify-center rounded-full",
+        "border border-border/60 bg-surface/50 text-muted backdrop-blur-md",
+        "opacity-40 shadow-sm transition-[opacity,color,border-color,background-color] duration-300",
+        "hover:opacity-100 hover:border-border hover:bg-surface hover:text-foreground",
+        "focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
         className,
       )}
     >
-      {OPTIONS.map(({ value, label, Icon }) => {
-        const isActive = mounted && active === value;
-        return (
-          <button
-            key={value}
-            type="button"
-            role="radio"
-            aria-checked={isActive}
-            aria-label={`${label} theme`}
-            title={`${label} theme`}
-            onClick={() => setTheme(value)}
-            className={cn(
-              "relative z-10 flex h-7 w-7 items-center justify-center rounded-full transition-colors duration-200",
-              isActive
-                ? "text-background"
-                : "text-muted hover:text-foreground",
-            )}
-          >
-            {isActive && (
-              <span
-                aria-hidden
-                className="absolute inset-0 rounded-full bg-foreground"
-              />
-            )}
-            <Icon className="relative h-[15px] w-[15px]" strokeWidth={2} />
-          </button>
-        );
-      })}
-    </div>
+      <Icon className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
+    </button>
   );
 }

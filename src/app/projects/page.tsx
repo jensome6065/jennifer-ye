@@ -20,12 +20,14 @@ export default function ProjectsPage() {
 
   return (
     <Container as="section" className="py-24 sm:py-32">
-      <SectionHeader
-        as="h1"
-        eyebrow="Selected work"
-        title="Projects"
-        description="One featured launch, a quick grab if you're feeling lucky, then the full list — filter by AI/ML, web apps, research, games, or systems."
-      />
+        <SectionHeader
+          as="h1"
+          eyebrow="Projects"
+          stationKind="line"
+          lineKey="projects"
+          title="Selected work"
+          description="Featured work on the board, a quick grab if you're feeling lucky, then the full list — filter by AI/ML, web apps, research, games, or systems."
+        />
       <div className="mt-14 sm:mt-16">
         <ProjectFilters projects={projects} />
       </div>

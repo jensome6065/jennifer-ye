@@ -6,7 +6,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Container } from "@/components/ui/container";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { SocialLinks } from "@/components/ui/social-links";
 import { useScrolled } from "@/hooks/use-scroll";
 import { siteConfig } from "@/lib/site-config";
@@ -24,13 +23,11 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [menuPath, setMenuPath] = useState(pathname);
 
-  // Close the mobile menu when the route changes (adjust state during render).
   if (menuPath !== pathname) {
     setMenuPath(pathname);
     if (open) setOpen(false);
   }
 
-  // Lock body scroll while the mobile menu is open, and let Escape close it.
   useEffect(() => {
     if (!open) return;
     document.body.style.overflow = "hidden";
@@ -55,15 +52,13 @@ export function Navbar() {
     >
       <Container>
         <nav className="flex h-16 items-center justify-between gap-4">
-          {/* Brand */}
           <Link
             href="/"
-            className="font-display text-base font-semibold tracking-tight text-foreground transition-opacity hover:opacity-70"
+            className="font-display text-lg font-bold uppercase tracking-[0.06em] text-foreground transition-opacity hover:opacity-70"
           >
             {siteConfig.name}
           </Link>
 
-          {/* Desktop nav */}
           <ul className="hidden items-center gap-1 md:flex">
             {siteConfig.nav.map((item) => {
               const active = isActive(pathname, item.href);
@@ -90,6 +85,12 @@ export function Navbar() {
                         }}
                       />
                     )}
+                    {active && (
+                      <span
+                        aria-hidden
+                        className="absolute bottom-1 left-1/2 h-0.5 w-3 -translate-x-1/2 rounded-full bg-accent"
+                      />
+                    )}
                     {item.label}
                   </Link>
                 </li>
@@ -97,12 +98,6 @@ export function Navbar() {
             })}
           </ul>
 
-          {/* Desktop actions */}
-          <div className="hidden items-center gap-2 md:flex">
-            <ThemeToggle />
-          </div>
-
-          {/* Mobile menu button */}
           <button
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -116,7 +111,6 @@ export function Navbar() {
         </nav>
       </Container>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -142,7 +136,7 @@ export function Navbar() {
                         href={item.href}
                         aria-current={active ? "page" : undefined}
                         className={cn(
-                          "block rounded-2xl px-4 py-4 font-display text-2xl font-medium tracking-tight transition-colors",
+                          "block rounded-2xl px-4 py-4 font-display text-3xl font-bold uppercase tracking-[-0.01em] transition-colors",
                           active
                             ? "bg-brand/10 text-brand"
                             : "text-muted hover:text-foreground",
@@ -155,9 +149,8 @@ export function Navbar() {
                 })}
               </ul>
 
-              <div className="mt-auto flex items-center justify-between border-t border-border pt-6">
+              <div className="mt-auto border-t border-border pt-6">
                 <SocialLinks />
-                <ThemeToggle />
               </div>
             </Container>
           </motion.div>

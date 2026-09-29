@@ -4,7 +4,11 @@ import { MotionProvider } from "@/components/motion-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { BackToTop } from "@/components/ui/back-to-top";
-import { display, inter } from "@/lib/fonts";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { NycStamp } from "@/components/ui/nyc-stamp";
+import { PoleStickers } from "@/components/ui/pole-stickers";
+import { PigeonCursor } from "@/components/ui/pigeon-cursor";
+import { display, sans } from "@/lib/fonts";
 import { siteConfig } from "@/lib/site-config";
 import "@/styles/globals.css";
 
@@ -68,8 +72,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#faf9f7" },
-    { media: "(prefers-color-scheme: dark)", color: "#14161c" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f1eb" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a101c" },
   ],
 };
 
@@ -80,7 +84,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${display.variable}`}
+      className={`${sans.variable} ${display.variable}`}
     >
       <body className="flex min-h-dvh flex-col antialiased">
         <ThemeProvider
@@ -101,7 +105,17 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            <div className="pointer-events-none fixed bottom-[3.25rem] left-4 z-50 hidden sm:flex sm:items-end sm:gap-2">
+              <div className="pointer-events-auto">
+                <PoleStickers />
+              </div>
+              <div className="pointer-events-auto pb-1">
+                <NycStamp quiet />
+              </div>
+            </div>
+            <ThemeToggle />
             <BackToTop />
+            <PigeonCursor />
           </MotionProvider>
         </ThemeProvider>
       </body>

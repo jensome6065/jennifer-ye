@@ -9,112 +9,163 @@
 /* ------------------------------------------------------------------ *
  * Design tokens
  *
- * Semantic tokens are defined as CSS variables so themes swap values
- * without components knowing which theme is active. Tailwind's @theme
- * maps them to utility classes (bg-background, text-foreground, etc.).
+ * NYC × streetwear × editorial — mostly blue, paper-warm neutrals,
+ * tiny accent hits. Semantic tokens swap by theme; components never
+ * hardcode raw hues.
  * ------------------------------------------------------------------ */
 
 :root {
   /*
-   * Brand palette — deep navy + muted golden yellow.
-   * These are raw brand hues; semantic tokens below decide where they show
-   * up. The interface stays ~90–95% neutral: brand/accent are used with
-   * intent (branding, active nav, links, buttons, small highlights), never
-   * as full-bleed sections.
+   * Brand blues — deep navy / midnight through washed denim.
+   * The interface stays ~90% blue-neutral: navy for brand, denim washes
+   * for atmosphere, never a rainbow.
    */
-  --color-navy-950: #0b1220;
-  --color-navy-900: #111b2e;
-  --color-navy-800: #16233b;
-  --color-navy-700: #1d3050;
-  --color-navy-600: #274268;
-  --color-navy-500: #345583;
-  --color-navy-400: #5b7bab;
+  --color-navy-950: #0a101c;
+  --color-navy-900: #0e1626;
+  --color-navy-800: #142038;
+  --color-navy-700: #1a2d4d;
+  --color-navy-600: #243d66;
+  --color-navy-500: #325484;
+  --color-navy-400: #5a7aa8;
+  --color-navy-300: #8aa3c4;
 
-  --color-gold-600: #b6862c;
-  --color-gold-500: #c99a3a;
-  --color-gold-400: #d9ad55;
-  --color-gold-300: #e6c37e;
+  /* Washed / denim secondary blues — atmosphere, subtle fills */
+  --color-denim-700: #3d5270;
+  --color-denim-500: #6b82a0;
+  --color-denim-300: #a8b8cc;
+  --color-denim-100: #d8e0ea;
+
+  /* Accent punctuation — taxi yellow (rare), chrome, signal red */
+  --color-taxi-600: #d4a017;
+  --color-taxi-500: #f5c518;
+  --color-taxi-400: #ffd84d;
+  --color-taxi-300: #ffe68a;
+
+  /* Legacy aliases so older gold refs still resolve if any remain */
+  --color-gold-600: var(--color-taxi-600);
+  --color-gold-500: var(--color-taxi-500);
+  --color-gold-400: var(--color-taxi-400);
+  --color-gold-300: var(--color-taxi-300);
+
+  --color-chrome-500: #9aa3b2;
+  --color-chrome-400: #b8c0cc;
+
+  --color-signal-600: #b33a3a;
+  --color-signal-500: #c94a4a;
+
+  /* Mets-orange micro — stickers / rivalry only, never primary */
+  --color-mets-orange: #ff5910;
+  --color-mets-blue: #002d72;
 
   /* Plum — reserved for very subtle Music-section accents only. */
   --color-plum-500: #6c5a86;
   --color-plum-400: #8a76a6;
 
-  /* Neutral charcoal scale — warm-leaning, never pure black. */
-  --color-charcoal-950: #0d0f14;
-  --color-charcoal-900: #14161c;
-  --color-charcoal-850: #191c23;
-  --color-charcoal-800: #20242c;
-  --color-charcoal-700: #2b303a;
+  /* Night-city charcoal — blue-leaning, never pure black */
+  --color-charcoal-950: #0a0c12;
+  --color-charcoal-900: #10131a;
+  --color-charcoal-850: #151922;
+  --color-charcoal-800: #1c212c;
+  --color-charcoal-700: #2a3140;
 
-  /* ---- Light theme semantics ---- */
-  --background: #faf9f7; /* warm white */
-  --background-elevated: #ffffff; /* soft off-white cards read against warm bg */
-  --foreground: #14161c; /* near black */
-  --muted: #6b7280; /* slate gray — secondary text */
-  --muted-foreground: #4b5563;
-  --border: #e6e3dd; /* light warm gray */
-  --border-strong: #d6d2ca;
+  /* ---- Light theme — warm paper ---- */
+  --background: #f4f1eb; /* paper / newsprint warm */
+  --background-elevated: #faf8f4;
+  --foreground: #12161f; /* ink */
+  --muted: #6a7382;
+  --muted-foreground: #4a5566;
+  --border: #ddd6cb;
+  --border-strong: #c9c0b3;
 
-  /* Brand (navy): branding, active nav, links, decorative accents */
+  /* Brand (navy) */
   --brand: var(--color-navy-700);
   --brand-strong: var(--color-navy-800);
   --brand-foreground: #ffffff;
   --link: var(--color-navy-700);
   --link-hover: var(--color-navy-900);
 
-  /* Accent (gold): buttons/CTAs, hover, badges, highlights — used sparingly */
-  --accent: var(--color-gold-500);
-  --accent-strong: var(--color-gold-600);
-  --accent-foreground: #14161c; /* dark text on gold */
+  /* Wash (denim) — secondary atmosphere */
+  --wash: var(--color-denim-100);
+  --wash-strong: var(--color-denim-300);
 
-  /* Primary interactive surface defaults to navy (primary buttons, etc.) */
+  /* Accent (taxi yellow) — rare punctuation */
+  --accent: var(--color-taxi-500);
+  --accent-strong: var(--color-taxi-600);
+  --accent-foreground: #12161f;
+
+  /* Chrome + signal — micro only */
+  --chrome: var(--color-chrome-500);
+  --signal: var(--color-signal-600);
+
+  /* Primary interactive → navy */
   --primary: var(--color-navy-700);
   --primary-hover: var(--color-navy-800);
   --primary-foreground: #ffffff;
 
   --ring: var(--color-navy-700);
-
-  /* Section-scoped accents (see .section-* below) */
   --plum: var(--color-plum-500);
 
-  /* Surfaces layered on top of the background */
-  --surface: rgba(255, 255, 255, 0.72);
-  --surface-border: rgba(20, 22, 28, 0.06);
+  --surface: rgba(250, 248, 244, 0.78);
+  --surface-border: rgba(18, 22, 31, 0.07);
+
+  /* Film grain intensity (body overlay) */
+  --grain-opacity: 0.045;
+
+  /* Late-night footer / map band */
+  --night-wash-glow: color-mix(in srgb, var(--color-navy-600) 28%, transparent);
+  --night-wash-from: color-mix(
+    in srgb,
+    var(--color-navy-900) 8%,
+    var(--color-background)
+  );
+  --night-wash-to: color-mix(
+    in srgb,
+    var(--color-navy-950) 18%,
+    var(--color-background)
+  );
 }
 
 .dark {
-  /* Deep charcoal background, slightly lighter charcoal cards. */
-  --background: var(--color-charcoal-900);
-  --background-elevated: var(--color-charcoal-800);
-  --foreground: #f3f4f6; /* soft white */
-  --muted: #9096a1; /* muted gray */
-  --muted-foreground: #aab0bb;
-  --border: #262b34;
-  --border-strong: #333945;
+  /* Night-city — deep blue-charcoal, not flat black UI */
+  --background: var(--color-navy-950);
+  --background-elevated: var(--color-charcoal-850);
+  --foreground: #eef1f6;
+  --muted: #8b95a8;
+  --muted-foreground: #a8b2c2;
+  --border: #243044;
+  --border-strong: #334560;
 
-  /* Navy becomes a supporting color — lifted so it stays visible on charcoal. */
-  --brand: var(--color-navy-400);
-  --brand-strong: var(--color-navy-500);
-  --brand-foreground: #ffffff;
-  --link: #8fb0dd; /* brightened navy for readable links on dark */
-  --link-hover: #b3caea;
+  --brand: var(--color-navy-300);
+  --brand-strong: var(--color-navy-400);
+  --brand-foreground: #0a101c;
+  --link: #9bb4d6;
+  --link-hover: #c2d2e8;
 
-  /* Gold stays the accent; warm enough to sit on charcoal. */
-  --accent: var(--color-gold-400);
-  --accent-strong: var(--color-gold-300);
-  --accent-foreground: #14161c;
+  --wash: color-mix(in srgb, var(--color-navy-800) 80%, transparent);
+  --wash-strong: var(--color-navy-600);
 
-  /* Primary buttons stay navy but use a lifted, richer navy on dark. */
+  --accent: var(--color-taxi-400);
+  --accent-strong: var(--color-taxi-300);
+  --accent-foreground: #12161f;
+
+  --chrome: var(--color-chrome-400);
+  --signal: var(--color-signal-500);
+
   --primary: var(--color-navy-600);
   --primary-hover: var(--color-navy-500);
-  --primary-foreground: #f3f4f6;
+  --primary-foreground: #eef1f6;
 
   --ring: var(--color-navy-400);
-
   --plum: var(--color-plum-400);
 
-  --surface: rgba(20, 22, 28, 0.72);
+  --surface: rgba(16, 19, 26, 0.78);
   --surface-border: rgba(255, 255, 255, 0.08);
+
+  --grain-opacity: 0.06;
+
+  --night-wash-glow: color-mix(in srgb, var(--color-navy-500) 22%, transparent);
+  --night-wash-from: var(--color-navy-950);
+  --night-wash-to: color-mix(in srgb, var(--color-navy-900) 70%, black);
 }
 
 /* Map semantic tokens into Tailwind's theme so utilities are generated. */
@@ -127,38 +178,38 @@
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
 
-  /* Brand (navy) */
   --color-brand: var(--brand);
   --color-brand-strong: var(--brand-strong);
   --color-brand-foreground: var(--brand-foreground);
   --color-link: var(--link);
   --color-link-hover: var(--link-hover);
 
-  /* Accent (gold) */
+  --color-wash: var(--wash);
+  --color-wash-strong: var(--wash-strong);
+
   --color-accent: var(--accent);
   --color-accent-strong: var(--accent-strong);
   --color-accent-foreground: var(--accent-foreground);
 
-  /* Primary interactive (navy) */
+  --color-chrome: var(--chrome);
+  --color-signal: var(--signal);
+
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
 
-  /* Section-scoped accent */
   --color-plum: var(--plum);
 
   --color-ring: var(--ring);
   --color-surface: var(--surface);
   --color-surface-border: var(--surface-border);
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-display), var(--font-inter), ui-sans-serif,
+  --font-sans: var(--font-sans-family), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), var(--font-sans-family), ui-sans-serif,
     system-ui, sans-serif;
 
-  /* Layout */
   --breakpoint-3xl: 120rem;
 
-  /* Motion tokens — restrained, product-grade easing */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
 }
@@ -181,18 +232,51 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-feature-settings: "cv11", "ss01";
-    font-variation-settings: "opsz" 32;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Smooth theme transitions on color-bearing properties only */
+    /* Yankees-adjacent pinstripe — whisper only */
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 11px,
+      color-mix(in srgb, var(--color-brand) 4.5%, transparent) 11px,
+      color-mix(in srgb, var(--color-brand) 4.5%, transparent) 12px
+    );
     transition:
       background-color 0.4s var(--ease-in-out-soft),
       color 0.4s var(--ease-in-out-soft);
   }
 
-  /* Consistent, visible focus ring for keyboard users */
+  /* Hide system cursor when the pigeon follower is active */
+  html.pigeon-cursor,
+  html.pigeon-cursor
+    *:not(input):not(textarea):not(select):not([contenteditable="true"]) {
+    cursor: none !important;
+  }
+
+  /*
+   * Paper grain — fixed film/newsprint texture. Quiet personality;
+   * if it reads first, lower --grain-opacity.
+   */
+  body::before {
+    content: "";
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 180px 180px;
+    mix-blend-mode: multiply;
+  }
+
+  .dark body::before,
+  :where(.dark) body::before {
+    mix-blend-mode: soft-light;
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-ring);
     outline-offset: 2px;
@@ -204,7 +288,6 @@
     color: var(--color-brand-foreground);
   }
 
-  /* Respect user's reduced-motion preference globally */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -234,9 +317,7 @@
 }
 
 /*
- * Premium yellow-underline hover — a thin gold rule that wipes in from the
- * left on hover/focus. Applied to text links (`.link-underline`). Respects
- * reduced-motion via the global transition reset above.
+ * Gold underline wipe — accent punctuation on text links.
  */
 @utility link-underline {
   background-image: linear-gradient(var(--color-accent), var(--color-accent));
@@ -251,11 +332,6 @@
   }
 }
 
-/*
- * Skeleton shimmer — a soft sheen sweeping across loading placeholders.
- * Consumed by the LoadingSkeleton component. The global reduced-motion
- * reset above neutralizes this animation for users who opt out.
- */
 @keyframes skeleton-shimmer {
   100% {
     transform: translateX(100%);
@@ -281,29 +357,83 @@
   }
 }
 
-/* ------------------------------------------------------------------ *
- * Section identity
- *
- * Sections stay cohesive but earn subtle personality by re-pointing the
- * accent/decorative tokens within a scope. Wrap a section in one of these
- * classes; descendants that use `accent`/`plum` tokens inherit the shift.
- * ------------------------------------------------------------------ */
-
-/* Eats — slightly warmer; gold is allowed to appear a touch more freely. */
-.section-eats {
-  --accent: var(--color-gold-600);
-  --accent-strong: var(--color-gold-500);
-}
-
-.dark .section-eats {
-  --accent: var(--color-gold-300);
-  --accent-strong: var(--color-gold-400);
+/* Soft denim wash behind a block — atmosphere, not a card. */
+@utility wash-panel {
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--color-wash) 70%, transparent),
+    transparent 70%
+  );
 }
 
 /*
- * Music — introduces very subtle plum, only where it complements album art
- * / Spotify UI. Purple never becomes primary; navy + gold still lead.
+ * Late-night navy band — after-hours subway lighting for footer / map frames.
+ * One atmospheric plane; do not stack these on every section.
  */
+@utility night-wash {
+  background:
+    radial-gradient(80% 70% at 20% 0%, var(--night-wash-glow), transparent 60%),
+    linear-gradient(180deg, var(--night-wash-from), var(--night-wash-to));
+}
+
+/* Billboard wall — ticker + soft scanline (Projects collage). */
+@keyframes billboard-ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes billboard-scan {
+  from {
+    transform: translateY(-30%);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.7;
+  }
+  to {
+    transform: translateY(30%);
+    opacity: 0;
+  }
+}
+
+@utility animate-billboard-ticker {
+  animation: billboard-ticker 28s linear infinite;
+}
+
+@utility animate-billboard-scan {
+  animation: billboard-scan 1.1s ease-out 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-billboard-ticker,
+  .animate-billboard-scan {
+    animation: none !important;
+  }
+}
+
+/* City-block hairline — hard rule between sections. */
+@utility block-rule {
+  border-top: 1px solid var(--color-border-strong);
+}
+
+/* ------------------------------------------------------------------ *
+ * Section identity
+ * ------------------------------------------------------------------ */
+
+.section-eats {
+  --accent: var(--color-taxi-600);
+  --accent-strong: var(--color-taxi-500);
+}
+
+.dark .section-eats {
+  --accent: var(--color-taxi-300);
+  --accent-strong: var(--color-taxi-400);
+}
+
 .section-music {
   --brand: var(--color-plum-500);
   --brand-strong: #5a4a72;

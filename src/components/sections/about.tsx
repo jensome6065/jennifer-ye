@@ -14,7 +14,11 @@ export function About() {
     <Container as="section" className="py-24 sm:py-32">
       <AnimatedSection stagger className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
         <AnimatedItem>
-          <SectionHeader eyebrow={about.eyebrow} title={about.heading} />
+          <SectionHeader
+            eyebrow={about.eyebrow}
+            lineKey="about"
+            title={about.heading}
+          />
         </AnimatedItem>
         <AnimatedItem className="space-y-5">
           {about.paragraphs.map((paragraph, i) => (

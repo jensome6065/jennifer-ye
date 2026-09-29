@@ -81,17 +81,31 @@ export function ProjectDeck({ projects, copy }: ProjectDeckProps) {
   return (
     <div className="flex flex-col gap-8">
       <div className="relative mx-auto flex w-full max-w-3xl flex-col items-center justify-center gap-8 sm:flex-row sm:items-end sm:gap-10 lg:gap-14">
-        {/* Facedown pack */}
-        <div
+        {/* Facedown pack — click/tap to shuffle */}
+        <button
+          type="button"
+          onClick={() => void shuffle()}
+          disabled={shuffling}
+          aria-label={shuffling ? copy.busyLabel : copy.actionLabel}
+          aria-busy={shuffling}
           className={cn(
-            "relative w-[min(42%,11.5rem)] shrink-0 sm:w-[11.5rem]",
+            "relative w-[min(42%,11.5rem)] shrink-0 cursor-pointer border-0 bg-transparent p-0 sm:w-[11.5rem]",
             CARD_ASPECT,
+            "rounded-[0.95rem] transition-[transform,opacity] duration-300 ease-out",
+            "hover:scale-[1.03] active:scale-[0.98]",
+            "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
+            "disabled:cursor-wait disabled:opacity-90 disabled:hover:scale-100",
           )}
-          aria-hidden
         >
           {/* Extra thickness under the pack */}
-          <div className="absolute -bottom-1 left-1 right-1 top-2 rounded-[0.85rem] bg-brand/40" />
-          <div className="absolute -bottom-0.5 left-0.5 right-0.5 top-1 rounded-[0.9rem] bg-brand/55" />
+          <div
+            className="absolute -bottom-1 left-1 right-1 top-2 rounded-[0.85rem] bg-brand/40"
+            aria-hidden
+          />
+          <div
+            className="absolute -bottom-0.5 left-0.5 right-0.5 top-1 rounded-[0.9rem] bg-brand/55"
+            aria-hidden
+          />
 
           {pack.map((project, i) => {
             const fromBack = pack.length - 1 - i;
@@ -113,12 +127,13 @@ export function ProjectDeck({ projects, copy }: ProjectDeckProps) {
                       ? (i % 2) * 0.04 + fromBack * 0.02
                       : fromBack * 0.02,
                 }}
+                aria-hidden
               >
                 <CardBack />
               </motion.div>
             );
           })}
-        </div>
+        </button>
 
         {/* Face-up dealt card */}
         <div
@@ -150,22 +165,13 @@ export function ProjectDeck({ projects, copy }: ProjectDeckProps) {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-center gap-4">
-        <Button
-          variant="accent"
-          size="lg"
-          onClick={() => void shuffle()}
-          disabled={shuffling}
-          aria-busy={shuffling}
-        >
-          {shuffling ? copy.busyLabel : copy.actionLabel}
-        </Button>
-        {copy.viewAll && (
+      {copy.viewAll && (
+        <div className="flex justify-center">
           <Button href={copy.viewAll.href} variant="ghost" size="md">
             {copy.viewAll.label}
           </Button>
-        )}
-      </div>
+        </div>
+      )}
 
       <p className="sr-only" aria-live="polite" aria-atomic="true">
         {announce}
@@ -209,29 +215,44 @@ function packPose(
   };
 }
 
-/** Classic facedown poker back — navy field, gold diamond motif. */
+/** Classic facedown pack — MetroCard-inspired transfer pass (not trademarked chrome). */
 function CardBack() {
   return (
     <div
       className={cn(
         "flex h-full w-full flex-col overflow-hidden rounded-[0.95rem]",
-        "border-2 border-brand-foreground/15 bg-brand",
+        "border border-brand-foreground/20 bg-[color-mix(in_srgb,var(--color-brand)_92%,black)]",
         "shadow-[0_8px_24px_-12px_rgba(0,0,0,0.55)]",
       )}
     >
-      <div className="m-1.5 flex flex-1 flex-col rounded-[0.65rem] border border-accent/35 bg-[color-mix(in_srgb,var(--color-brand-strong)_80%,black)] p-1.5">
-        <div
-          className="relative flex flex-1 items-center justify-center overflow-hidden rounded-[0.45rem]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(45deg, color-mix(in srgb, var(--color-accent) 18%, transparent) 0 2px, transparent 2px 10px), repeating-linear-gradient(-45deg, color-mix(in srgb, var(--color-accent) 14%, transparent) 0 2px, transparent 2px 10px)",
-          }}
-        >
+      {/* Magnetic stripe */}
+      <div
+        aria-hidden
+        className="mt-5 h-7 w-full bg-[linear-gradient(180deg,#2a2a2a_0%,#111_40%,#3a3a3a_70%,#1a1a1a_100%)]"
+      />
+      <div className="flex flex-1 flex-col justify-between px-3 pb-3 pt-3">
+        <div className="flex items-start justify-between gap-2">
+          <div>
+            <p className="font-display text-[10px] font-bold uppercase tracking-[0.22em] text-accent">
+              Transfer
+            </p>
+            <p className="mt-1 text-[8px] font-semibold uppercase tracking-[0.18em] text-brand-foreground/55">
+              Unlimited · Local
+            </p>
+          </div>
           <span
             aria-hidden
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-accent/50 bg-brand/80 font-display text-lg font-semibold text-accent"
+            className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#FCCC0A] font-display text-[9px] font-bold text-[#12161f]"
           >
-            J
+            N
+          </span>
+        </div>
+        <div className="flex items-end justify-between">
+          <span className="font-display text-2xl font-bold tracking-wide text-brand-foreground/90">
+            J·Y
+          </span>
+          <span className="text-[8px] font-semibold uppercase tracking-[0.2em] text-brand-foreground/45">
+            Est. NYC
           </span>
         </div>
       </div>

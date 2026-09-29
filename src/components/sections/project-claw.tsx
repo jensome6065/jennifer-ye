@@ -20,6 +20,7 @@ export function ProjectClaw({ projects, filter }: ProjectClawProps) {
       <SectionHeader
         as="h2"
         eyebrow={copy.eyebrow}
+        lineKey="arcade"
         title={copy.heading}
         description={copy.description}
       />

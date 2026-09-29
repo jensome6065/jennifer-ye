@@ -5,17 +5,25 @@ import { Current } from "@/components/sections/current";
 import { Connect } from "@/components/sections/connect";
 
 /**
- * Home page. Order: hero → about → featured slot → current → connect.
- * Slot strip is the recruiter-facing featured draw; the claw lives on Projects.
+ * Home page. City-block rhythm: hard rules between sections, station labels
+ * inside each. Order: hero → about → featured → current → connect.
  */
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <About />
-      <FeaturedSlot />
-      <Current />
-      <Connect />
+      <div className="block-rule">
+        <About />
+      </div>
+      <div className="block-rule">
+        <FeaturedSlot />
+      </div>
+      <div className="block-rule">
+        <Current />
+      </div>
+      <div className="block-rule">
+        <Connect />
+      </div>
     </>
   );
 }

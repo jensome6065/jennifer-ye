@@ -6,7 +6,7 @@ export interface ProjectGameContent {
   eyebrow: string;
   heading: string;
   description: string;
-  /** Primary action label (Shuffle / Grab). */
+  /** Primary action label (deck aria-label / Grab button). */
   actionLabel: string;
   /** Label while the animation is running. */
   busyLabel: string;
@@ -22,6 +22,9 @@ export interface ProjectGameContent {
   /** Near-miss copy. */
   missAnnounce?: string;
   missHint?: string;
+  /** Directional coaching when the claw is off a ball. */
+  missHintLeft?: string;
+  missHintRight?: string;
   /** Controls hint. */
   aimHint?: string;
 }
@@ -31,14 +34,16 @@ export const projectClawContent: ProjectGameContent = {
   eyebrow: "Arcade",
   heading: "Claw a project",
   description:
-    "Filter the prize balls by group, move the claw, and grab one. Same energy as a real claw machine — just for case studies.",
+    "Filter the prize balls by group, line the claw up, and grab. Misses happen — nudge left or right and try again.",
   actionLabel: "Grab",
   busyLabel: "Grabbing…",
   resultAnnounce: "Grabbed",
   resultCta: "Open case study",
   cabinetLabel: "Project prizes",
   chuteLabel: "Prize chute",
-  missAnnounce: "Slipped — try again",
-  missHint: "Move over a ball and grab when the claw is centered.",
+  missAnnounce: "Missed — try again",
+  missHint: "Line the claw up over a ball, then grab.",
+  missHintLeft: "Almost — move slightly left to grab that ball.",
+  missHintRight: "Almost — move slightly right to grab that ball.",
   aimHint: "Hold ← → or drag in the bay · Grab drops the claw",
 };

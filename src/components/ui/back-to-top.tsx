@@ -35,9 +35,9 @@ export function BackToTop({ className }: { className?: string }) {
           exit={{ opacity: 0, y: 12, scale: 0.9 }}
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           className={cn(
-            "fixed bottom-6 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full",
-            "border border-border bg-surface text-foreground backdrop-blur-xl shadow-md",
-            "transition-colors duration-200 hover:border-brand hover:text-brand",
+            "fixed bottom-5 right-5 z-50 flex h-10 w-10 items-center justify-center rounded-full",
+            "border border-border/60 bg-surface/70 text-foreground backdrop-blur-md shadow-sm",
+            "opacity-70 transition-[opacity,color,border-color] duration-200 hover:opacity-100 hover:border-brand hover:text-brand",
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
             className,
           )}

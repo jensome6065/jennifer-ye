@@ -17,6 +17,7 @@ export function FeaturedSlot() {
       <SectionHeader
         as="h2"
         eyebrow={featuredSlot.eyebrow}
+        lineKey="featured"
         title={featuredSlot.heading}
         description={featuredSlot.description}
       />

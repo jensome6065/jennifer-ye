@@ -101,7 +101,9 @@ export function SpotCard({
           {FAVORITE_LABEL[kind]}
         </p>
         <p className="mt-2 font-medium text-foreground">{favorite}</p>
-        <p className="mt-3 text-pretty text-sm text-muted-foreground">{review}</p>
+        {review ? (
+          <p className="mt-3 text-pretty text-sm text-muted-foreground">{review}</p>
+        ) : null}
 
         {hasLinks && (
           <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 border-t border-border pt-4">

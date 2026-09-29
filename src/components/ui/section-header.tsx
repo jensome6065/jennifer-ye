@@ -1,32 +1,30 @@
 import type { ReactNode } from "react";
+import { StationLabel } from "@/components/ui/station-label";
 import { cn } from "@/lib/utils";
 
 interface SectionHeaderProps {
-  /** Small uppercase label above the title (e.g. "Selected work"). */
+  /** Uppercase eyebrow label (e.g. "About"). */
   eyebrow?: string;
-  /** The section heading. */
+  /** @deprecated Unused — kept so existing call sites typecheck. */
+  stationKind?: "stop" | "line";
+  /** @deprecated Unused — kept so existing call sites typecheck. */
+  lineKey?: string;
   title: ReactNode;
-  /** Optional supporting copy below the title. */
   description?: ReactNode;
-  /** Heading level for correct document outline. Defaults to h2. */
   as?: "h1" | "h2" | "h3";
   align?: "left" | "center";
-  /** Optional trailing content (e.g. a "View all" link) shown on the right. */
   action?: ReactNode;
   className?: string;
 }
 
 const HEADING_SIZES: Record<NonNullable<SectionHeaderProps["as"]>, string> = {
-  h1: "text-4xl sm:text-5xl lg:text-6xl",
-  h2: "text-3xl sm:text-4xl",
-  h3: "text-2xl sm:text-3xl",
+  h1: "text-5xl sm:text-6xl lg:text-7xl",
+  h2: "text-4xl sm:text-5xl",
+  h3: "text-3xl sm:text-4xl",
 };
 
 /**
- * Editorial section heading: an uppercase eyebrow, a display-font title, and
- * optional description. Encapsulates the type hierarchy used across pages so
- * headings stay consistent. Set `action` for a right-aligned link/button
- * (only respected with left alignment).
+ * Editorial section heading: quiet eyebrow + condensed display title.
  */
 export function SectionHeader({
   eyebrow,
@@ -42,13 +40,14 @@ export function SectionHeader({
   const heading = (
     <div className={cn("max-w-2xl", centered && "mx-auto")}>
       {eyebrow && (
-        <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-muted">
-          {eyebrow}
-        </p>
+        <StationLabel
+          name={eyebrow}
+          className={cn(centered && "mb-3 flex w-full justify-center")}
+        />
       )}
       <Heading
         className={cn(
-          "text-balance font-display font-semibold tracking-tight text-foreground",
+          "text-balance font-display font-bold uppercase tracking-[-0.01em] text-foreground",
           HEADING_SIZES[Heading],
         )}
       >

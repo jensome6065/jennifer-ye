@@ -24,6 +24,8 @@ export default function LifestylePage() {
         <SectionHeader
           as="h1"
           eyebrow="Lifestyle"
+          stationKind="line"
+          lineKey="lifestyle"
           title="Still exploring"
           description="When I'm not building, I'm out in the world — the tables worth the trip and the records that score the work."
         />

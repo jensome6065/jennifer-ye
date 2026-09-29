@@ -25,6 +25,13 @@ export interface CurrentItem {
 
 export type { ProjectGameContent };
 
+/** A single frame in the hero photo sequence. */
+export interface HeroPhoto {
+  src: string;
+  /** Accessible description — kept out of the visual chrome. */
+  alt: string;
+}
+
 export interface HomeContent {
   hero: {
     /** Small label above the name. */
@@ -34,6 +41,11 @@ export interface HomeContent {
     /** Supporting one-to-two sentence positioning statement. */
     tagline: string;
     cta: { label: string; href: string };
+    /**
+     * Editorial photo sequence beside the name — proves "can't sit still"
+     * without captions. Order is display order for the soft crossfade.
+     */
+    photos: HeroPhoto[];
   };
   about: {
     eyebrow: string;
@@ -67,6 +79,20 @@ export const homeContent: HomeContent = {
     tagline:
       "I can't sit still — whether that's learning, building, or exploring.",
     cta: { label: "View Projects", href: "/projects" },
+    photos: [
+      {
+        src: "/images/home/work.jpg",
+        alt: "Working from a high-rise overlooking the bay, laptop open at the window.",
+      },
+      {
+        src: "/images/home/eats.jpg",
+        alt: "A colorful Thai dinner — curry, rice, and iced tea at a warm restaurant table.",
+      },
+      {
+        src: "/images/home/outdoors.jpg",
+        alt: "Coastal hike overlooking ocean ruins and sea stacks under a clear blue sky.",
+      },
+    ],
   },
   about: {
     eyebrow: "About",
@@ -80,8 +106,8 @@ export const homeContent: HomeContent = {
     eyebrow: "Featured",
     heading: "Shuffle the deck",
     description:
-      "A poker-style shuffle through selected work — deal yourself a featured project, or browse them all.",
-    actionLabel: "Shuffle",
+      "Tap the pack for a poker-style shuffle through selected work — deal yourself a featured project, or browse them all.",
+    actionLabel: "Shuffle the deck",
     busyLabel: "Shuffling…",
     resultAnnounce: "Dealt",
     resultCta: "View case study",
@@ -110,7 +136,7 @@ export const homeContent: HomeContent = {
     ],
   },
   connect: {
-    eyebrow: "Get in touch",
+    eyebrow: "Connect",
     heading: "Let's keep moving.",
     description:
       "Open to engineering roles, collaborations, and problems that won't sit still either.",

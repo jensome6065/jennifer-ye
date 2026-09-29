@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Turntable } from "@/components/ui/turntable";
 import type { Album } from "@/content/music";
@@ -12,24 +12,79 @@ interface RecordShelfProps {
 
 /**
  * Music listening room: a turntable stage above a horizontal record shelf.
- * Pick a sleeve to drop it on the platter and play the can't-skip track
- * in-page via Spotify.
+ * Pick a sleeve (or hit play) to cue the can't-skip preview — HTML5 audio so
+ * playback works without Spotify embed chrome.
  */
 export function RecordShelf({ albums }: RecordShelfProps) {
   const [activeId, setActiveId] = useState(albums[0]?.id ?? "");
-  const [hasSelected, setHasSelected] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const active = albums.find((a) => a.id === activeId) ?? albums[0];
 
+  useEffect(() => {
+    const audio = new Audio();
+    audio.preload = "none";
+    audioRef.current = audio;
+
+    const onPlaying = () => setPlaying(true);
+    const onPause = () => setPlaying(false);
+    const onEnded = () => setPlaying(false);
+
+    audio.addEventListener("playing", onPlaying);
+    audio.addEventListener("pause", onPause);
+    audio.addEventListener("ended", onEnded);
+
+    return () => {
+      audio.pause();
+      audio.removeEventListener("playing", onPlaying);
+      audio.removeEventListener("pause", onPause);
+      audio.removeEventListener("ended", onEnded);
+      audioRef.current = null;
+    };
+  }, []);
+
   if (!active) return null;
+
+  const playAlbum = (album: Album) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const nextSrc = album.previewUrl;
+    const alreadyLoaded = audio.dataset.albumId === album.id;
+
+    if (!alreadyLoaded) {
+      audio.src = nextSrc;
+      audio.dataset.albumId = album.id;
+    }
+
+    void audio.play().catch(() => {
+      setPlaying(false);
+    });
+  };
+
+  const selectAlbum = (album: Album) => {
+    setActiveId(album.id);
+    playAlbum(album);
+  };
+
+  const togglePlay = () => {
+    const audio = audioRef.current;
+    if (!audio || !active) return;
+
+    if (playing && audio.dataset.albumId === active.id) {
+      audio.pause();
+      return;
+    }
+
+    playAlbum(active);
+  };
 
   return (
     <div>
       <Turntable
         album={active}
         spinning={playing}
-        autoplay={hasSelected}
-        onPlaybackChange={setPlaying}
+        onTogglePlay={togglePlay}
       />
 
       {/* Shelf */}
@@ -63,10 +118,7 @@ export function RecordShelf({ albums }: RecordShelfProps) {
                     album={album}
                     selected={selected}
                     priority={i < 5}
-                    onSelect={() => {
-                      setHasSelected(true);
-                      setActiveId(album.id);
-                    }}
+                    onSelect={() => selectAlbum(album)}
                   />
                 </li>
               );
@@ -111,7 +163,7 @@ function ShelfSleeve({
       id={`shelf-${album.id}`}
       role="radio"
       aria-checked={selected}
-      aria-label={`${title} by ${artist}${selected ? ", on the platter" : ""}`}
+      aria-label={`${title} by ${artist}${selected ? ", on the deck" : ""}`}
       onClick={onSelect}
       className={cn(
         "group relative w-[7.25rem] shrink-0 text-left sm:w-32 md:w-[8.5rem]",

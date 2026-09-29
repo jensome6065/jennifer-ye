@@ -21,6 +21,7 @@ export function Connect() {
         <SectionHeader
           align="center"
           eyebrow={connect.eyebrow}
+          lineKey="connect"
           title={connect.heading}
           description={connect.description}
         />

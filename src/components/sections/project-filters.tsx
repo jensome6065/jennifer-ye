@@ -4,11 +4,10 @@ import { useMemo, useState } from "react";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/animated-section";
 import { ProjectCard } from "@/components/ui/project-card";
 import { ProjectClaw } from "@/components/sections/project-claw";
-import { ProjectDrop } from "@/components/sections/project-drop";
+import { ProjectBillboard } from "@/components/sections/project-billboard";
 import {
   PROJECT_GROUP_ORDER,
   PROJECT_GROUPS,
-  getDropProject,
   type Project,
   type ProjectGroup,
 } from "@/content/projects";
@@ -21,13 +20,22 @@ interface ProjectFiltersProps {
 }
 
 /**
- * Projects index — featured drop → claw → filterable list.
- * The archive is a scannable row list (not a collage): practical to browse
- * and easy to extend as content grows.
+ * Projects index — Times Square billboard wall → claw → filterable list.
+ * The archive stays a scannable row list; the collage is featured-only.
  */
 export function ProjectFilters({ projects }: ProjectFiltersProps) {
   const [filter, setFilter] = useState<FilterValue>("all");
-  const drop = useMemo(() => getDropProject(), []);
+
+  const wall = useMemo(() => {
+    const featured = projects.filter((p) => p.featured);
+    if (featured.length >= 6) return featured.slice(0, 6);
+    const rest = projects.filter((p) => !p.featured);
+    return [...featured, ...rest].slice(0, Math.min(6, projects.length));
+  }, [projects]);
+  const wallSlugs = useMemo(
+    () => new Set(wall.map((p) => p.slug)),
+    [wall],
+  );
 
   const filtered = useMemo(() => {
     if (filter === "all") return projects;
@@ -35,20 +43,17 @@ export function ProjectFilters({ projects }: ProjectFiltersProps) {
   }, [filter, projects]);
 
   /**
-   * When browsing "All", the drop already owns the hero slot — omit it from
-   * the list so the same project doesn't appear twice. Filtered views keep
-   * every match, including the drop project.
+   * When browsing "All", projects already on the billboard are omitted from
+   * the list so nothing appears twice. Filtered views keep every match.
    */
   const archive = useMemo(() => {
-    if (filter === "all" && drop) {
-      return filtered.filter((p) => p.slug !== drop.slug);
+    if (filter === "all" && wallSlugs.size > 0) {
+      return filtered.filter((p) => !wallSlugs.has(p.slug));
     }
     return filtered;
-  }, [filtered, filter, drop]);
+  }, [filtered, filter, wallSlugs]);
 
-  const showDrop =
-    Boolean(drop) &&
-    (filter === "all" || (drop ? drop.groups.includes(filter) : false));
+  const showWall = filter === "all" && wall.length > 0;
 
   const counts = useMemo(() => {
     const next: Record<FilterValue, number> = {
@@ -69,8 +74,8 @@ export function ProjectFilters({ projects }: ProjectFiltersProps) {
 
   return (
     <div>
-      {showDrop && drop ? (
-        <ProjectDrop project={drop} className="mb-14 sm:mb-16" />
+      {showWall ? (
+        <ProjectBillboard projects={wall} className="mb-14 sm:mb-16" />
       ) : null}
 
       <div className="mb-14 sm:mb-16">
